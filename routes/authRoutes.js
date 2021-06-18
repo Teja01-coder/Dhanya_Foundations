@@ -53,50 +53,42 @@ const signup_get = (_, res) => {
 };
 
 const signup_post = async (req, res) => {
-  const { email, password, name, batch, phone, gender, dept } = req.body;
+  const {
+    name,
+    address,
+    city,
+    age,
+    phone,
+    bloodGroup,
+    healthRecord,
+    introducedBy,
+    introducerName,
+    introducerRegistration,
+    designation,
+    qualification,
+    session
+  } = req.body;
 
-
-  let url1 = `email: ${email}\nname: ${name}\nbatch: ${batch}\nphone: ${phone}\ngender: ${gender}\nDept: ${dept}`
-  const url = await QRCode.toDataURL(url1);
   try {
-    const user = await User.create({
-      email,
-      password,
+    const user = await Student.create({
       name,
-      batch,
+      address,
+      city,
+      age,
       phone,
-      gender,
-      url,
-      dept
+      bloodGroup,
+      healthRecord,
+      introducedBy,
+      introducerName,
+      introducerRegistration,
+      designation,
+      qualification,
+      session
     });
-    const token = createToken(user._id);
-    res.cookie("jwt", token, { httpOnly: true, maxAge: maxAge * 1000 });
+
     res.status(201).json({ user: user._id });
   } catch (err) {
     console.log(err);
-
-    const errors = handleErrors(err);
-    res.status(400).json({ errors });
-  }
-};
-
-const login_get = (_, res) => {
-  res.render("index");
-};
-
-const login_post = async (req, res) => {
-  const { email, password } = req.body;
-
-  try {
-    const user = await User.login(email, password);
-    const token = createToken(user._id);
-    res.cookie("jwt", token, { httpOnly: true, maxAge: maxAge * 1000 });
-    res.status(200).json({ user: user._id });
-  } catch (err) {
-    const errors = handleErrors(err);
-
-    console.log(err);
-    res.status(400).json({ errors });
   }
 };
 
@@ -123,46 +115,38 @@ const admin_post = async (req, res) => {
   }
 };
 
-const logout_get = (_, res) => {
-  res.cookie("jwt", "", { maxAge: 1 });
-  res.redirect("/");
-};
+//const approve_post = async (req, res) => {
+//const { id } = req.body;
 
-const approve_post = async (req, res) => {
-  const { id } = req.body;
+//try {
+//const user = await User.findOneAndUpdate({ _id: id }, { isVerified: true });
+//console.log(user);
+//sendConfirmationmail(user.email, user.name);
+//res.status(200).json({ user: user._id });
+//} catch (err) {
+//const errors = handleErrors(err);
+//res.status(400).json({ errors });
+//}
+//};
 
-  try {
-    const user = await User.findOneAndUpdate({ _id: id }, { isVerified: true });
-    console.log(user);
-    sendConfirmationmail(user.email, user.name);
-    res.status(200).json({ user: user._id });
-  } catch (err) {
-    const errors = handleErrors(err);
-    res.status(400).json({ errors });
-  }
-};
+//const reject_post = async (req, res) => {
+//const { id } = req.body;
 
-const reject_post = async (req, res) => {
-  const { id } = req.body;
-
-  try {
-    const user = await User.deleteOne({ _id: id });
-    console.log(user);
-    res.status(200).json({ user: user._id });
-  } catch (err) {
-    const errors = handleErrors(err);
-    res.status(400).json({ errors });
-  }
-};
+//try {
+//const user = await User.deleteOne({ _id: id });
+//console.log(user);
+//res.status(200).json({ user: user._id });
+//} catch (err) {
+//const errors = handleErrors(err);
+//res.status(400).json({ errors });
+//}
+//};
 
 router.get("/register", signup_get);
 router.post("/register", signup_post);
-//router.get("/", login_get);
-//router.post("/", login_post);
 router.get("/admin", admin_get);
 router.post("/admin", admin_post);
-router.post("/approve", approve_post);
-router.post("/reject", reject_post);
+//router.post("/approve", approve_post);
+//router.post("/reject", reject_post);
 
 module.exports = router;
-
