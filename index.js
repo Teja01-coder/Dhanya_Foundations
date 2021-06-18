@@ -2,8 +2,8 @@ const express = require("express");
 const mongoose = require('mongoose')
 //const cookieParser  = require('cookie-parser');
 
-//const authRoutes = require('./routes/authRoutes')
-//const { requireAuth, checkUser, checkAdmin, approvals } = require('./middleware/authMiddleware')
+const authRoutes = require('./routes/authRoutes')
+const { approvals } = require('./middlewares/authMiddleware')
 const app = express();
 
 require("dotenv").config();
@@ -26,11 +26,9 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true, useCr
 
 //app.get('*', checkUser)
 app.get("/", (_, res) => res.render("index"));
-app.get("/adminpage", (_, res) => res.render("adminpage"));
+app.get("/adminpage", approvals, (_, res) => res.render("adminpage"));
 app.get("/adminlogin", (_, res) => res.render("adminlogin"));
-app.get("/form", (_, res) => res.render("form"));
+app.get("/register", (_, res) => res.render("form"));
 app.get("/message", (_, res) => res.render("message"));
-//app.get('/events', requireAuth, (req, res) => res.render("events"))
-//app.get('/approval', checkAdmin, approvals, (req, res) => res.render("approval"))
 
-//app.use(authRoutes)
+app.use(authRoutes)
