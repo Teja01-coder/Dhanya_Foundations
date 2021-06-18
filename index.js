@@ -1,5 +1,6 @@
-const express = require("express");
+const express = require("express")
 const mongoose = require('mongoose')
+const cookieParser  = require('cookie-parser');
 
 const authRoutes = require('./routes/authRoutes')
 const { approvals } = require('./middlewares/authMiddleware')
@@ -9,9 +10,10 @@ require("dotenv").config();
 
 const PORT = process.env.PORT || 3000;
 
-app.use(express.static("public"));
-app.use(express.json());
-app.set("view engine", "ejs");
+app.use(express.static("public"))
+app.use(express.json())
+app.use(cookieParser())
+app.set('view engine', 'ejs')
 
 const dbURI = process.env.MONGODB_URI
 mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex:true, useFindAndModify: false })
