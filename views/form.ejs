@@ -22,7 +22,7 @@
   <!-- nav starts here -->
 <!-- dhgbsalinhvlasjdlajlvasdlvn -->
   <nav class="navbar navbar-expand-lg" style="background-color:#f56c6d">
-    <a class="navbar-brand " style="color:#ffffff ; margin-left: auto; margin-right:auto">
+    <a class="navbar-brand" href="/" style="color:#ffffff ; margin-left: auto; margin-right:auto">
       <h1>Dhyana Foundation</h1>
     </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -33,14 +33,14 @@
   <!-- form starts here -->
 
 
-  <form class=" shadow rounded-3 boxing" action="index.html" method="post">
+  <form class="shadow rounded-3 boxing">
     <h5>32nd Batch Sankalpa kriya yoga(SKY)</h5>
     <hr>
     <div class="row">
       <!-- userName -->
       <div class="col-md-4 boxing">
         <div class="sm">
-          <label for="userName" class="form-label labling">Your Name:</label>
+          <label for="userName" class="form-label labling">Name:</label>
           <input type="text" class="form-control" id="userName" required>
         </div>
       </div>
@@ -95,7 +95,7 @@
       <!-- age of the user -->
       <div class="col-md-2 boxing">
         <div class="sm">
-          <label for="age" class="form-label labling">age:</label>
+          <label for="age" class="form-label labling">Age:</label>
           <input type="number" class="form-control" id="age" required>
         </div>
       </div>
@@ -172,12 +172,12 @@
         <!-- Session preference -->
         <div id="session">
           <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+            <input class="form-check-input" type="radio" name="session" id="inlineCheckbox1" value="M">
             <label class="form-check-label" for="inlineCheckbox1">Morning</label>
           </div>
           <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
-            <label class="form-check-label" for="inlineCheckbox2">Afternon</label>
+            <input class="form-check-input" type="radio" name="session" id="inlineCheckbox2" value="A">
+            <label class="form-check-label" for="inlineCheckbox2">Afternoon</label>
           </div>
         </div>
       </div>
@@ -199,11 +199,60 @@
 <div class="d-grid gap-2 col-3 mx-auto">
   <button class="btn "  style=" background-color:#f56c6d; color:#ffffff"  type="submit">Submit</button>
 </div>
-
-
-
-
   </form>
+
+  <script>
+      const form = document.querySelector('form')
+
+      const name = document.getElementById('userName')
+      const address = document.getElementById('address')
+      const city = document.getElementById('location')
+      const age = document.getElementById('age')
+      const phone = document.getElementById('mobNumber')
+      const bloodGroup = document.getElementById('bloodGroup')
+      const healthRecord = document.getElementById('health')
+      const introducedBy = document.getElementById('introBy')
+      const introducerName = document.getElementById('introName')
+      const introducerRegistration = document.getElementById('introReg')
+      const designation = document.getElementById('userDesignation')
+      const qualification = document.getElementById('userQualification')
+      const session = form.session
+
+      form.addEventListener('submit', async e => {
+          e.preventDefault()
+
+          const details = {
+              name: name.value,
+              address: address.value,
+              city: city.value,
+              age: age.value,
+              phone: phone.value,
+              bloodGroup: bloodGroup.value,
+              healthRecord: healthRecord.value,
+              introducedBy: introducedBy.value,
+              introducerName: introducerName.value,
+              introducerRegistration: introducerRegistration.value,
+              designation: designation.value,
+              qualification: qualification.value,
+              session: session.value
+          }
+
+          try {
+              const res = await fetch('/register', {
+                  method: 'POST',
+                  body: JSON.stringify(details),
+                  headers: {
+                      'Content-Type': 'application/json'
+                  }
+              })
+              const data = await res.json()
+              alert("Successfully registered")
+          } catch (err) {
+              console.log(err)
+          }
+      })
+
+  </script>
 </body>
 
 </html>
