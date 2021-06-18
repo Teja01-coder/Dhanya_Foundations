@@ -35,8 +35,55 @@
       <form class="form-inline my-2 my-lg-0">
         <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
         <button class="btn btn-outline my-2 my-sm-0" type="submit">Search</button>
-        </form>
+      </form>
       </div>
     </nav>
+
+    <div style="padding: 10px 20px;">
+        <% if (students.length > 0) { %>
+            <table class="table">
+                <tr>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>Blood Group</th>
+                    <th>City/Town</th>
+                    <th>Phone No</th>
+                    <th>Session</th>
+                    <th>Address</th>
+                    <th>Health Record</th>
+                    <th>Qualification</th>
+                    <th>Designation</th>
+                    <th>Introduced By</th>
+                    <th>Introducer Name</th>
+                    <th>Introducer Registration</th>
+                </tr>
+                <% for (let student of students) { %>
+                <tr>
+                    <td><%= student.name %></td>
+                    <td><%= student.age %></td>
+                    <td><%= student.bloodGroup %></td>
+                    <td><%= student.city %></td>
+                    <td><%= student.phone %></td>
+                    <td><%= student.session %></td>
+                    <td><%= student.address %></td>
+                    <td><%= student.healthRecord %></td>
+                    <td><%= student.qualification %></td>
+                    <td><%= student.designation %></td>
+                    <td><%= student.introducedBy %></td>
+                    <td><%= student.introducerName %></td>
+                    <td><%= student.introducerRegistration %></td>
+                </tr>
+                <% } %>
+            </table>
+            <% } else { %>
+            <div style="margin-top: 10px; width:100%; display: flex; justify-content: center; padding: 9px 5px;">
+                <style>
+                    .hello { color: #5a5a5a; }
+                </style>
+                <h2 class="hello">No new students to be verified</h2>
+            </div>
+            <% } %>
+
+    </div>
   </body>
 </html>

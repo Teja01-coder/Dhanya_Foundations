@@ -14,7 +14,7 @@ const checkAdmin = (req, res, next) => {
                 if (user.isAdmin) {
                     next()
                 } else {
-                    res.redirect('/home')
+                    res.redirect('/')
                 }
             }
         })
@@ -24,16 +24,16 @@ const checkAdmin = (req, res, next) => {
 }
 
 const approvals = async (_, res, next) => {
-    const newUsers = await Student.find({ isVerified: false })
+    const students = await Student.find({})
 
-    if (newUsers) {
-        res.locals.users = newUsers
+    if (students) {
+        res.locals.students = students
         next()
     } else {
-        res.locals.users = null
+        res.locals.students = null
         next()
     }
 }
 
-module.exports = { requireAuth, checkUser, checkAdmin, approvals }
+module.exports = { checkAdmin, approvals }
 
