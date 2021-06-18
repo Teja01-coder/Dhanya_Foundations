@@ -1,13 +1,38 @@
 const { Router } = require("express");
+const jwt = require('jsonwebtoken')
 const Student = require("../models/Student");
+const Admin = require("../models/Admin");
 
 const router = Router();
 
-const signup_get = (_, res) => {
+const handleErrors = (err) => {
+  let errors = { email: "", password: "" };
+
+  if (err.message === "Incorrect Email") {
+    errors.email = "The email is not registered";
+    return errors;
+  }
+
+  if (err.message === "Incorrect Password") {
+    errors.password = "Incorrect Password";
+    return errors;
+  }
+
+  return errors;
+};
+
+const maxAge = 3 * 24 * 60 * 60;
+
+const createToken = (id) =>
+  jwt.sign({ id }, "dhyana foundation", {
+    expiresIn: maxAge,
+  });
+
+const register_get = (_, res) => {
   res.render("adminlogin");
 };
 
-const signup_post = async (req, res) => {
+const register_post = async (req, res) => {
   const {
     name,
     address,
@@ -52,15 +77,13 @@ const admin_get = (_, res) => {
 };
 
 const admin_post = async (req, res) => {
-  const { email, password } = req.body;
-
+    const { email, password } = req.body
   try {
-    const user = await User.login(email, password);
-    if (user.isAdmin) {
-      const token = createToken(user._id);
+    const admin = await Admin.login(email, password);
+    if (admin) {
+      const token = createToken(admin._id);
       res.cookie("jwt", token, { httpOnly: true, maxAge: maxAge * 1000 });
-
-      res.status(200).json({ user: user._id });
+      res.status(200).json({ student: admin._id });
     } else {
       throw Error("You are not an Admin");
     }
@@ -70,8 +93,8 @@ const admin_post = async (req, res) => {
   }
 };
 
-router.get("/register", signup_get);
-router.post("/register", signup_post);
+router.get("/register", register_get);
+router.post("/register", register_post);
 router.get("/admin", admin_get);
 router.post("/admin", admin_post);
 
