@@ -14,6 +14,7 @@ const studentSchema = new mongoose.Schema({
     bloodGroup: strRequired,
     healthRecord: strRequired,
     session: strRequired,
+    batch: strRequired,
     //code: strRequired,
     introducerName: strRequired,
     introducedBy: strRequired,
