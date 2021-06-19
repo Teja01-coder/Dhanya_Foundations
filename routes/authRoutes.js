@@ -42,7 +42,7 @@ const createToken = (id) =>
   });
 
 const register_get = (_, res) => {
-  res.render("adminlogin");
+  res.render("form");
 };
 
 const register_post = async (req, res) => {
