@@ -5,16 +5,29 @@ const Admin = require("../models/Admin");
 
 const router = Router();
 
+const BATCHES = {
+    number: 35,
+    //batch: [
+        //["AS", "AT"],
+        //["AU", "AV"],
+        //["AW", "AW"],
+        //["BA", "BB"],
+        //["BC", "BD"]
+    //]
+    morning: ["AS", "AU", "AW", "BA", "BC"],
+    evening: ["AT", "AV", "AX", "BB", "BD"]
+}
+
 const handleErrors = (err) => {
   let errors = { email: "", password: "" };
 
   if (err.message === "Incorrect Email") {
-    errors.email = "The email is not registered";
+    errors.email = err.message;
     return errors;
   }
 
   if (err.message === "Incorrect Password") {
-    errors.password = "Incorrect Password";
+    errors.password = err.message;
     return errors;
   }
 
@@ -49,6 +62,9 @@ const register_post = async (req, res) => {
     session
   } = req.body;
 
+    const id = session === 'm' ? BATCHES.morning[0] : BATCHES.evening[0]
+    const allCount = session === 'm' ? await Student.find({ session: 'm' }) : await Student.find({ session: 'e' })
+
   try {
     const user = await Student.create({
       name,
@@ -63,7 +79,9 @@ const register_post = async (req, res) => {
       introducerRegistration,
       designation,
       qualification,
-      session
+      session,
+      batch: "35",
+      code: id + `${allCount + 1}`.padStart(4, '0')
     });
 
     res.status(201).json({ user: user._id });
