@@ -1,26 +1,38 @@
 const jwt = require('jsonwebtoken')
 const Student = require('../models/Student')
+const Admin = require('../models/Admin')
 
 const checkAdmin = (req, res, next) => {
     const token = req.cookies.jwt
 
     if (token) {
-        jwt.verify(token, 'the american college', async (err, decodedToken) => {
+        jwt.verify(token, 'dhyana foundation', async (err, decodedToken) => {
             if (err) {
                 console.log(err)
                 next()
             } else {
-                let user = await Student.findById(decodedToken.id)
-                if (user.isAdmin) {
+                let user = await Admin.findById(decodedToken.id)
+                console.log(user)
+                if (user) {
                     next()
                 } else {
-                    res.redirect('/')
+                    res.redirect('/admin')
                 }
             }
         })
     } else {
-        res.redirect('/home')
+        res.redirect('/admin')
     }
+}
+
+const availability = async (_, res, next) => {
+    const morning = await Student.find({ session: 'm' })
+    const evening = await Student.find({ session: 'e' })
+
+    res.locals.morning = morning.length
+    res.locals.evening = evening.length
+
+    next()
 }
 
 const approvals = async (_, res, next) => {
@@ -35,5 +47,5 @@ const approvals = async (_, res, next) => {
     }
 }
 
-module.exports = { checkAdmin, approvals }
+module.exports = { checkAdmin, approvals, availability }
 
