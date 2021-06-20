@@ -75,7 +75,7 @@ const register_post = async (req, res) => {
       qualification,
       session,
       batch: `${BATCHES.number}`,
-      code: id + `${allCount + 1}`.padStart(4, '0')
+      code: id + `${allCount.length + 1}`.padStart(4, '0')
     });
 
     res.status(201).json({ user: user._id });
