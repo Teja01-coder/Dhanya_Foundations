@@ -5,6 +5,7 @@ const strRequired = {
     required: true
 }
 
+
 const studentSchema = new mongoose.Schema({
     name: strRequired,
     address: strRequired,
