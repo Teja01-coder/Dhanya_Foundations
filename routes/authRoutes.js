@@ -14,6 +14,7 @@ const BATCHES = {
     evening: ["AT", "AV", "AX", "BB", "BD"]
 }
 
+
 const handleErrors = (err) => {
   let errors = { email: "", password: "" };
 
