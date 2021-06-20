@@ -1,5 +1,6 @@
 const { Router } = require("express");
 const jwt = require('jsonwebtoken')
+const wbm = require('wbm');
 const Student = require("../models/Student");
 const Admin = require("../models/Admin");
 
@@ -7,13 +8,6 @@ const router = Router();
 
 const BATCHES = {
     number: 35,
-    //batch: [
-        //["AS", "AT"],
-        //["AU", "AV"],
-        //["AW", "AW"],
-        //["BA", "BB"],
-        //["BC", "BD"]
-    //]
     morning: ["AS", "AU", "AW", "BA", "BC"],
     evening: ["AT", "AV", "AX", "BB", "BD"]
 }
@@ -80,7 +74,7 @@ const register_post = async (req, res) => {
       designation,
       qualification,
       session,
-      batch: "35",
+      batch: `${BATCHES.number}`,
       code: id + `${allCount + 1}`.padStart(4, '0')
     });
 
@@ -111,9 +105,30 @@ const admin_post = async (req, res) => {
   }
 };
 
+const message_post = async (req, res) => {
+    const { msg } = req.body
+
+    try {
+        const allStudents = await Student.find({})
+        const phones = allStudents.map(e => `+91${e.phone}`)
+        wbm
+            .start()
+            .then(async () => {
+                await wbm.send(phones, msg)
+                await wbm.end()
+                res.status(200).json({ code: 200 })
+            })
+            .catch(err => console.log(err))
+    } catch (err) {
+        console.log(err)
+        res.status(400).json({ err })
+    }
+}
+
 router.get("/register", register_get);
 router.post("/register", register_post);
 router.get("/admin", admin_get);
 router.post("/admin", admin_post);
+router.post("/message", message_post);
 
 module.exports = router;
