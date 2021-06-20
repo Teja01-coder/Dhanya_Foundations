@@ -28,6 +28,6 @@ app.get("/", (_, res) => res.render("index"));
 app.get("/adminpage", approvals, checkAdmin, (_, res) => res.render("adminpage"));
 app.get("/admin", (_, res) => res.render("adminlogin"));
 app.get("/register", availability, (_, res) => res.render("form"));
-app.get("/message", (_, res) => res.render("message"));
+app.get("/message", checkAdmin, (_, res) => res.render("message"));
 
 app.use(authRoutes)

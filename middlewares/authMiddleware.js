@@ -12,7 +12,6 @@ const checkAdmin = (req, res, next) => {
                 next()
             } else {
                 let user = await Admin.findById(decodedToken.id)
-                console.log(user)
                 if (user) {
                     next()
                 } else {
