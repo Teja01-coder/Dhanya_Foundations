@@ -9,7 +9,7 @@ const Admin = require("../models/Admin");
 const router = Router();
 
 const BATCHES = {
-    number: 35,
+    number: 34,
     morning: ["AS", "AU", "AW", "BA", "BC"],
     evening: ["AT", "AV", "AX", "BB", "BD"]
 }
