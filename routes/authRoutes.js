@@ -80,9 +80,11 @@ const register_post = async (req, res) => {
       code: id + `${allCount.length + 1}`.padStart(4, '0')
     });
 
-    res.status(201).json({ user: user._id });
+    res.status(201).json({ user });
   } catch (err) {
-    console.log(err);
+      if (err.message.includes('duplicate')) {
+          res.status(400).json({ error: "Phone no. already registered" })
+      }
   }
 };
 

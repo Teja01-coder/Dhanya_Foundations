@@ -10,7 +10,10 @@ const studentSchema = new mongoose.Schema({
     address: strRequired,
     city: strRequired,
     age: strRequired,
-    phone: strRequired,
+    phone: {
+        unique: true,
+        ...strRequired
+    },
     bloodGroup: strRequired,
     healthRecord: strRequired,
     session: strRequired,

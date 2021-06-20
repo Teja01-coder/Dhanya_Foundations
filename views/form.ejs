@@ -32,6 +32,64 @@
   <!-- nav ends here -->
   <!-- form starts here -->
 
+  <style type="text/css" media="screen">
+    body {
+        overflow-x: hidden;
+    }
+    .overlay {
+        width: 100vw;
+        height: 100vh;
+        display: none;
+        overflow: hidden;
+        background-color: rgba(0, 0, 0, 0.4);
+        position: absolute;
+        z-index: 99;
+    }
+    .popup {
+        width: 300px;
+        height: 317px;
+        padding: 10px 15px;
+        position: relative;
+        margin: auto;
+        top: 15%;
+        background-color: white;
+        border-radius: 10px;
+        text-align: center;
+    }
+    .popup>button {
+        padding: 7px 23px;
+        border: 0;
+        border-radius: 30px;
+        background-color: lightgrey;
+    }
+    .popup h5 {
+        margin: 19px 0;
+    }
+    .popup>button:active {
+        background-color: grey;
+    }
+    .popup span {
+        font-weight: bold;
+    }
+    .spannote {
+        display: block;
+        font-weight: normal;
+        font-size: 14px;
+        margin-bottom: 10px;
+    }
+  </style>
+
+  <div class="overlay">
+      <div class="popup">
+          <h3>Registration Success</h3>
+            <h5>Name:    <span data-field="name"></span></h5>
+            <h5>Code:    <span data-field="code"></span></h5>
+            <h5>Batch:   <span data-field="batch"></span></h5>
+            <h5>Session: <span data-field="session"></span></h5>
+            <span class="spannote">Please note down the details</span>
+          <button>OK</button>
+      </div>
+  </div>
 
   <form class="shadow rounded-3 boxing">
     <h5>32nd batch sankalpa kriya yoga(sky)</h5>
@@ -44,18 +102,6 @@
           <input type="text" class="form-control" id="username" required>
         </div>
       </div>
-      <!-- batch number -->
-      <!--<div class="col-md-3 boxing">-->
-        <!--<label for="username" class="form-label labling" for="batchnumber">batch number:</label>-->
-        <!--<select class="form-select form-control" id="batchnumber">-->
-          <!--<option selected></option>-->
-          <!--<option value="1">1</option>-->
-          <!--<option value="2">2</option>-->
-          <!--<option value="3">3</option>-->
-          <!--<option value="4">4</option>-->
-          <!--<option value="5">5</option>-->
-        <!--</select>-->
-      <!--</div>-->
     </div>
     <!-- second row of form -->
     <hr>
@@ -72,6 +118,7 @@
         <div class="sm">
           <label for="mobnumber" class="form-label labling">Contact / Whatsapp Number:</label>
           <input type="number" class="form-control" id="mobnumber" required>
+          <span class="error" style="color: red; font-size: 14px;"></span>
         </div>
       </div>
     </div>
@@ -201,6 +248,18 @@
 
   <script>
       const form = document.querySelector('form')
+      const overlay = document.querySelector('.overlay')
+      const okBtn = document.querySelector('.popup>button')
+
+      okBtn.addEventListener('click', () => {
+          overlay.style.display = 'none'
+      })
+      overlay.addEventListener('click', e => {
+          if (e.target.className === 'overlay')
+              overlay.style.display = 'none'
+          else
+              return 0
+      })
 
       window.onload = () => {
           const radios = document.querySelectorAll('input[type="radio"]')
@@ -224,7 +283,6 @@
       const introducerRegistration = document.getElementById('introreg')
       const designation = document.getElementById('userdesignation')
       const qualification = document.getElementById('userqualification')
-      <!--const batch = document.getElementById('batchNumber')-->
       const session = form.session
 
       form.addEventListener('submit', async e => {
@@ -242,7 +300,6 @@
               introducerName: introducerName.value,
               introducerRegistration: introducerRegistration.value,
               designation: designation.value,
-              <!--batch: batch.value,-->
               qualification: qualification.value,
               session: session.value
           }
@@ -256,7 +313,23 @@
                   }
               })
               const data = await res.json()
-              alert("Successfully registered.")
+              if (data.error) {
+                  document.querySelector('.error').textContent = data.error
+              } else {
+                  window.scrollTo(0, 0)
+                  const okName = document.querySelector('[data-field="name"]')
+                  const okCode = document.querySelector('[data-field="code"]')
+                  const okBatch = document.querySelector('[data-field="batch"]')
+                  const okSession = document.querySelector('[data-field="session"]')
+                  
+                  overlay.style.display = 'block'
+
+                  okName.textContent = data.user.name
+                  okCode.textContent = data.user.code
+                  okBatch.textContent = data.user.batch
+                  okSession.textContent = data.user.session === 'm' ? "Morning" : "Evening"
+              }
+
           } catch (err) {
               console.log(err)
           }
