@@ -47,7 +47,6 @@
     }
     .popup {
         width: 300px;
-        height: 317px;
         padding: 10px 15px;
         position: relative;
         margin: auto;
@@ -86,7 +85,7 @@
             <h5>Code:    <span data-field="code"></span></h5>
             <h5>Batch:   <span data-field="batch"></span></h5>
             <h5>Session: <span data-field="session"></span></h5>
-            <span class="spannote">Please note down the details</span>
+            <h5>Zoom Name: <span data-field="zoom"></span></h5>
           <button>OK</button>
       </div>
   </div>
@@ -321,12 +320,14 @@
                   const okCode = document.querySelector('[data-field="code"]')
                   const okBatch = document.querySelector('[data-field="batch"]')
                   const okSession = document.querySelector('[data-field="session"]')
+                  const okZoom = document.querySelector('[data-field="zoom"]')
 
                   overlay.style.display = 'block'
 
                   okName.textContent = data.user.name
                   okCode.textContent = data.user.code
                   okBatch.textContent = data.user.batch
+                  okZoom.textContent = `${data.user.code} ${data.user.name}`
                   okSession.textContent = data.user.session === 'm' ? "Morning" : "Evening"
               }
 
