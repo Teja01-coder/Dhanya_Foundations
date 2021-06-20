@@ -36,7 +36,7 @@
     body {
         overflow-x: hidden;
     }
-    .overlay {
+    .overlay, .overlay-error {
         width: 100vw;
         height: 100vh;
         display: none;
@@ -81,11 +81,18 @@
   <div class="overlay">
       <div class="popup">
           <h3>Registration Success</h3>
-            <h5>Name:    <span data-field="name"></span></h5>
-            <h5>Code:    <span data-field="code"></span></h5>
-            <h5>Batch:   <span data-field="batch"></span></h5>
-            <h5>Session: <span data-field="session"></span></h5>
-            <h5>Zoom Name: <span data-field="zoom"></span></h5>
+          <h5>Name:    <span data-field="name"></span></h5>
+          <h5>Code:    <span data-field="code"></span></h5>
+          <h5>Batch:   <span data-field="batch"></span></h5>
+          <h5>Session: <span data-field="session"></span></h5>
+          <h5>Zoom Name: <span data-field="zoom"></span></h5>
+          <button>OK</button>
+      </div>
+  </div>
+
+  <div class="overlay-error">
+      <div class="popup">
+          <h5>Phone no. Already Registered</h5>
           <button>OK</button>
       </div>
   </div>
@@ -117,7 +124,6 @@
         <div class="sm">
           <label for="mobnumber" class="form-label labling">Contact/ Whatsapp Number:</label>
           <input type="number" class="form-control" id="mobnumber" required>
-          <span class="error" style="color: red; font-size: 14px;"></span>
         </div>
       </div>
     </div>
@@ -191,7 +197,7 @@
       <!-- introduced by  -->
       <div class="col-md-5 boxing">
         <div class="sm">
-          <label for="introby" class="form-label labling">email :</label>
+          <label for="introby" class="form-label labling">Email :</label>
           <input type="text" class="form-control" id="introby" >
         </div>
       </div>
@@ -248,13 +254,23 @@
   <script>
       const form = document.querySelector('form')
       const overlay = document.querySelector('.overlay')
-      const okBtn = document.querySelector('.popup>button')
+      const overlayError = document.querySelector('.overlay-error')
+      const okBtn = document.querySelectorAll('.popup>button')
 
-      okBtn.addEventListener('click', () => {
-          overlay.style.display = 'none'
+      okBtn.forEach(e => {
+          e.addEventListener('click', () => {
+              overlay.style.display = 'none'
+              overlayError.style.display = 'none'
+          })
       })
       overlay.addEventListener('click', e => {
           if (e.target.className === 'overlay')
+              overlay.style.display = 'none'
+          else
+              return 0
+      })
+      overlayError.addEventListener('click', e => {
+          if (e.target.className === 'overlay-error')
               overlay.style.display = 'none'
           else
               return 0
@@ -313,7 +329,8 @@
               })
               const data = await res.json()
               if (data.error) {
-                  document.querySelector('.error').textContent = data.error
+                  window.scrollTo(0, 0)
+                  overlayError.style.display = 'block'
               } else {
                   window.scrollTo(0, 0)
                   const okName = document.querySelector('[data-field="name"]')

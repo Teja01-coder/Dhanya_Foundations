@@ -1,11 +1,10 @@
 const { Router } = require("express");
 const jwt = require('jsonwebtoken')
 const wbm = require('wbm');
+const json2csv = require('json2csv').parse
+const fs = require('fs')
 const Student = require("../models/Student");
 const Admin = require("../models/Admin");
-
-
-
 
 const router = Router();
 
@@ -130,10 +129,26 @@ const message_post = async (req, res) => {
     }
 }
 
+const download_data = async (_, res) => {
+    const data = await Student.find({})
+    let csv = []
+    const fields = Object.entries(Object.entries(data[0]).filter(e => e[0] === '_doc')[0][1]).map(e => `"${e[0]}"`)
+    csv.push(fields.join(', '))
+    for (let student of data) {
+        const stud = Object.entries(student).filter(e => e[0] === '_doc')[0][1]
+        const studEntries = Object.entries(stud).map(e => `"${e[1]}"`)
+        csv.push(studEntries.join(', '))
+    }
+    csv = csv.join('\n')
+    fs.writeFileSync('students.csv', csv)
+    res.download('students.csv')
+}
+
 router.get("/register", register_get);
 router.post("/register", register_post);
 router.get("/admin", admin_get);
 router.post("/admin", admin_post);
 router.post("/message", message_post);
+router.get("/download", download_data);
 
 module.exports = router;
