@@ -13,6 +13,13 @@ form h5{
   padding: 2%;
   text-align: center;
 }
+
+form h3{
+  color: #f56c6d;
+  font-weight:bolder;
+  padding: 2%;
+  text-align: center;
+}
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
