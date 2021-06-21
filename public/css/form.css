@@ -20,6 +20,11 @@ form h1{
   padding: 2%;
   text-align: center;
 }
+form h6 {
+  color: red;
+  font-size: 10px;
+
+}
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
