@@ -1,19 +1,27 @@
 const { Router } = require("express");
 const jwt = require('jsonwebtoken')
 const wbm = require('wbm');
-const json2csv = require('json2csv').parse
 const fs = require('fs')
 const Student = require("../models/Student");
 const Admin = require("../models/Admin");
+const { checkAdmin } = require("../middlewares/authMiddleware");
 
 const router = Router();
 
 const BATCHES = {
-    number: 34,
     morning: ["AS", "AU", "AW", "BA", "BC"],
     evening: ["AT", "AV", "AX", "BB", "BD"]
 }
 
+const allStudents = async (req, res) => {
+    const { batch } = req.body
+    try {  
+        const students = await Student.find({ batch })
+        res.status(200).json({ students })
+    } catch (err) {
+        console.log(err)
+    }
+}
 
 const handleErrors = (err) => {
   let errors = { email: "", password: "" };
@@ -45,22 +53,23 @@ const register_get = (_, res) => {
 const register_post = async (req, res) => {
   const {
     name,
+    batch,
     address,
     city,
     age,
     phone,
     bloodGroup,
     healthRecord,
-    introducedBy,
+    email,
     introducerName,
-    introducerRegistration,
+    introducerPhone,
     designation,
     qualification,
     session
   } = req.body;
 
-    const id = session === 'm' ? BATCHES.morning[0] : BATCHES.evening[0]
-    const allCount = session === 'm' ? await Student.find({ session: 'm' }) : await Student.find({ session: 'e' })
+    const id = session === 'm' ? BATCHES.morning[(+batch - 34) % 5] : BATCHES.evening[(+batch - 34) % 5]
+    const allCount = session === 'm' ? await Student.find({ session, batch }) : await Student.find({ session, batch })
 
   try {
     const user = await Student.create({
@@ -71,13 +80,13 @@ const register_post = async (req, res) => {
       phone,
       bloodGroup,
       healthRecord,
-      introducedBy,
+      email,
       introducerName,
-      introducerRegistration,
+      introducerPhone,
       designation,
       qualification,
       session,
-      batch: `${BATCHES.number}`,
+      batch,
       code: id + `${allCount.length + 1}`.padStart(4, '0')
     });
 
@@ -130,6 +139,24 @@ const message_post = async (req, res) => {
     }
 }
 
+const studedit_post = async (req, res) => {
+    const { type, id: _id } = req.body;
+    try {
+        if (type === 'DELETE') {
+            const student = await Student.deleteOne({ _id })
+            res.status(200).json({ msg: 'success' })
+        } else if (type === 'BLOCK') {
+            const student = await Student.findById(_id)
+            const isBlock = student.isBlocked
+            const final = await Student.findOneAndUpdate({ _id }, { isBlocked: !isBlock })
+            res.status(200).json({ msg: 'success' })
+        }
+    } catch (err) {
+        console.log(err)
+        res.status(400).json({ msg: 'error' })
+    }
+}
+
 const download_data = async (_, res) => {
     const data = await Student.find({})
     let csv = []
@@ -150,6 +177,8 @@ router.post("/register", register_post);
 router.get("/admin", admin_get);
 router.post("/admin", admin_post);
 router.post("/message", message_post);
-router.get("/download", download_data);
+router.post("/studedit", checkAdmin, studedit_post);
+router.post("/all", checkAdmin, allStudents);
+router.get("/download", checkAdmin, download_data);
 
 module.exports = router;
