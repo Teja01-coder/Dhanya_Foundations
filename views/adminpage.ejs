@@ -35,6 +35,19 @@
         <li class="nav-item">
           <a href="/download" style="display: inline-block; border-radius: 5px; text-decoration: none;" class="bg-white my-2 p-2 my-sm-0" id="download">Download Data</a>
         </li>
+        <li class="nav-item mx-2 mt-2">
+            <select id="select-batch">
+                <option value="34" selected>34</option>
+                <option value="35">35</option>
+                <option value="36">36</option>
+                <option value="37">37</option>
+                <option value="38">38</option>
+                <option value="39">39</option>
+                <option value="40">40</option>
+                <option value="41">41</option>
+                <option value="42">42</option>
+            </select>
+        </li>
       </ul>
       <form class="form-inline my-2 my-lg-0">
         <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
@@ -43,10 +56,30 @@
       </div>
     </nav>
 
-    <div style="padding: 10px 25px;">
+    <style type="text/css" media="screen">
+        [data-blocked="1"] {
+            color: grey;
+            background-color: lightgray;
+        }
+        .deleteStud {
+            border: 0;
+            padding: 11px;
+            font-size: 14px;
+            background-color: #c1c1c1;
+            color: #ff0050;
+            border-radius: 4px;
+        }
+        .deleteStud:active {
+            background-color: #505050;
+        }
+    </style>
+
+    <div class="students-list-container" style="padding: 10px 25px; overflow-x: scroll;">
         <% if (students.length > 0) { %>
             <table class="table">
                 <tr>
+                    <th>Delete</th>
+                    <th>Block</th>
                     <th>Code</th>
                     <th>Name</th>
                     <th>Batch</th>
@@ -59,12 +92,14 @@
                     <th>Health Record</th>
                     <th>Qualification</th>
                     <th>Designation</th>
-                    <th>Introduced By</th>
+                    <th>Email</th>
                     <th>Introducer Name</th>
-                    <th>Introducer Registration</th>
+                    <th>Introducer Phone Number</th>
                 </tr>
                 <% for (let student of students) { %>
-                <tr>
+                <tr id="<%= student._id %>" data-blocked="<%= +student.isBlocked %>">
+                    <td><button class="deleteStud" data-id="<%= student._id %>"><i class="fas fa-trash" data-id="<%= student._id %>"></i></button></td>
+                    <td><input type="checkbox" data-blocked="<%= student.isBlocked %>" data-id="<%= student._id %>" class="disableStud" id="<%= student._id %>"/></td>
                     <td><%= student.code %></td>
                     <td><%= student.name %></td>
                     <td><%= student.batch %></td>
@@ -77,9 +112,9 @@
                     <td><%= student.healthRecord %></td>
                     <td><%= student.qualification %></td>
                     <td><%= student.designation %></td>
-                    <td><%= student.introducedBy %></td>
+                    <td><%= student.email %></td>
                     <td><%= student.introducerName %></td>
-                    <td><%= student.introducerRegistration %></td>
+                    <td><%= student.introducerPhone %></td>
                 </tr>
                 <% } %>
             </table>
@@ -91,7 +126,83 @@
                 <h2 class="hello">No new students to be verified. </h2>
             </div>
             <% } %>
-
     </div>
+    <script>
+        const disableStud = document.querySelectorAll('.disableStud')
+        const deleteStud = document.querySelectorAll('.deleteStud')
+        const batchSelect = document.querySelector('#select-batch')
+        const studContainer = document.querySelector("students-list-container")
+
+        const emptyStud = batch => `<div style="margin-top: 10px; width:100%; display: flex; justify-content: center; padding: 9px 5px;">
+            <style>
+                .hello { color: #5a5a5a; }
+            </style>
+            <h2 class="hello">No students in batch ${batch}.</h2>
+        </div>`
+
+
+        const fetchBatch = async batch => {
+            const res = await fetch('/all', {
+                method: 'POST',
+                body: JSON.stringify({ batch }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            const data = await res.json()
+            return data.students
+        }
+
+        batchSelect.addEventListener('change', e => {
+            fetchBatch(e.target.value)
+        })
+
+        window.onload = () => {
+            disableStud.forEach(elmt => {
+                if (elmt.getAttribute('data-blocked') === "true") {
+                    elmt.checked = true
+                } else {
+                    elmt.checked = false
+                }
+            })
+        }
+
+        disableStud.forEach(elmt => {  
+            elmt.addEventListener('change', async e => {
+                const id = e.target.getAttribute('data-id')
+                const block = document.getElementById(id)
+                const isBlock = +!+block.getAttribute('data-blocked')
+                const val = { type: 'BLOCK', id }
+                const res = await fetch('/studedit', {
+                    method: 'POST',
+                    body: JSON.stringify(val),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                const data = await res.json()
+                console.log(data)
+                block.setAttribute('data-blocked', `${isBlock}`)
+            })
+        })
+
+        deleteStud.forEach(elmt => 
+            elmt.addEventListener('click', async e => {
+                const id = e.target.getAttribute('data-id')
+                const val = { type: 'DELETE', id }
+                const res = await fetch('/studedit', {
+                    method: 'POST',
+                    body: JSON.stringify(val),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                const data = await res.json()
+                if (data.msg === 'success') {
+                    document.querySelector('tbody').removeChild(document.getElementById(id))
+                }
+            })
+        )
+    </script>
   </body>
 </html>
