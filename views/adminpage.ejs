@@ -37,8 +37,8 @@
         </li>
         <li class="nav-item mx-2 mt-2">
             <select id="select-batch">
-                <option value="34">34</option>
-                <option value="35" selected>35</option>
+                <option value="34">34  Dt: 13-6-21  to  20-6-21.</option>
+                <option value="35" selected>35 Dt: 27-06-21 to 04-07-21.</option>
                 <option value="36">36</option>
                 <option value="37">37</option>
                 <option value="38">38</option>
@@ -114,7 +114,7 @@
         const createTable = (students, batch) => {
             if (students.length <= 0) {
                 studContainer.innerHTML = emptyStud(batch)
-                return 
+                return
             }
             const tr = []
             const table = document.createElement('table')
@@ -160,7 +160,7 @@
                 }
             })
 
-            disableStud.forEach(elmt => {  
+            disableStud.forEach(elmt => {
                 elmt.addEventListener('change', async e => {
                     const id = e.target.getAttribute('data-id')
                     const block = document.getElementById(id)
@@ -179,7 +179,7 @@
                 })
             })
 
-            deleteStud.forEach(elmt => 
+            deleteStud.forEach(elmt =>
                 elmt.addEventListener('click', async e => {
                     const id = e.target.getAttribute('data-id')
                     const val = { type: 'DELETE', id }
