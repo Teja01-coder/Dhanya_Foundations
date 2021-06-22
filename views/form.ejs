@@ -20,10 +20,10 @@
 
 <body>
   <!-- nav starts here -->
-<!-- dhgbsalinhvlasjdlajlvasdlvn -->
+  <!-- dhgbsalinhvlasjdlajlvasdlvn -->
   <nav class="navbar navbar-expand-lg" style="background-color:#f56c6d">
     <a class=" navbar-brand navbar-logo scroll" href="#wrapper">
-      <img class="mb-0 logo-light" style="height:50px; width:50px"src="assets/svg/dhyanalogo.png" alt="">
+      <img class="mb-0 logo-light" style="height:50px; width:50px" src="assets/svg/dhyanalogo.png" alt="">
 
     </a>
     <a class="navbar-brand" href="/" style="color:#ffffff ; margin-left: auto; margin-right:auto">
@@ -38,73 +38,91 @@
 
   <style type="text/css" media="screen">
     body {
-        overflow-x: hidden;
+      overflow-x: hidden;
     }
-    .overlay, .overlay-error {
-        width: 100vw;
-        height: 100vh;
-        display: none;
-        overflow: hidden;
-        background-color: rgba(0, 0, 0, 0.4);
-        position: absolute;
-        z-index: 99;
+
+
+    .overlay,
+    .overlay-error {
+      width: 100vw;
+      height: 100vh;
+      display: none;
+      overflow: hidden;
+      background-color: rgba(0, 0, 0, 0.4);
+      position: absolute;
+      z-index: 99;
     }
+
     .popup {
-        width: 300px;
-        padding: 10px 15px;
-        position: relative;
-        margin: auto;
-        top: 15%;
-        background-color: white;
-        border-radius: 10px;
-        text-align: center;
+      width: 300px;
+      padding: 10px 15px;
+      position: relative;
+      margin: auto;
+      top: 15%;
+      background-color: white;
+      border-radius: 10px;
+      text-align: center;
     }
+
     .popup>button {
-        padding: 7px 23px;
-        border: 0;
-        border-radius: 30px;
-        background-color: lightgrey;
+      padding: 7px 23px;
+      border: 0;
+      border-radius: 30px;
+      background-color: lightgrey;
     }
+
     .popup h5 {
-        margin: 19px 0;
+      margin: 19px 0;
     }
+
     .popup>button:active {
-        background-color: grey;
+      background-color: grey;
     }
+
     .popup span {
-        font-weight: bold;
+      font-weight: bold;
     }
+
     .spannote {
-        display: block;
-        font-weight: normal;
-        font-size: 14px;
-        margin-bottom: 10px;
+      display: block;
+      font-weight: normal;
+      font-size: 14px;
+      margin-bottom: 10px;
     }
+    /* .load:hover{
+      background-color: #f56c6d;
+      color: #ffffff;
+
+
+    } */
+
+
+
   </style>
 
   <div class="overlay">
-      <div class="popup">
-          <h3>Registration Success</h3>
-          <h5>Name:    <span data-field="name"></span></h5>
-          <h5>Code:    <span data-field="code"></span></h5>
-          <h5>Batch:   <span data-field="batch"></span></h5>
-          <h5>Session: <span data-field="session"></span></h5>
-          <h5>Zoom Name: <span data-field="zoom"></span></h5>
-          <h5> <span style="color: red"> please save your details⚠</span> </h5>
-          <button>OK</button>
-      </div>
+    <div class="popup" >
+      <h3>Registration Success</h3>
+      <h5>Name: <span data-field="name"></span></h5>
+      <h5>Code: <span data-field="code"></span></h5>
+      <h5>Batch: <span data-field="batch"></span></h5>
+      <h5>Session: <span data-field="session"></span></h5>
+      <h5>Zoom Name: <span data-field="zoom"></span></h5>
+      <h5> <span style="color: red"> please save your details⚠</span> </h5>
+      <button>OK</button>
+    </div>
   </div>
 
-  <div class="overlay-error">
-      <div class="popup">
-          <h5>Phone no. Already Registered</h5>
-          <button>OK</button>
-      </div>
+  <div class="overlay-error "  >
+    <div class="popup">
+      <h5>Phone no. Already Registered</h5>
+      <button>OK</button>
+    </div>
   </div>
 
   <form class="shadow rounded-3 boxing">
     <h1><b>సంకల్ప క్రియా యోగ (SKY)</b></h1>
-    <h5> <b>  34th Batch Dt:13-06-2021 to 20-06-2021 </b> </h5>
+    <h5> <b> 34th Batch Dt:13-06-2021 to 20-06-2021 </b> </h5>
     <hr>
     <div class="row">
       <!-- username -->
@@ -131,7 +149,7 @@
           <label for="mobnumber" class="form-label labling">Contact/ Whatsapp Number:</label>
 
           <input type="number" class="form-control" id="mobnumber" required>
-            <h6>(Only one mobile number is allowed!!)</h6>
+          <h6>(Only one mobile number is allowed!!)</h6>
         </div>
       </div>
     </div>
@@ -189,14 +207,14 @@
       <div class="col-md-5 boxing">
         <div class="sm">
           <label for="userqualification" class="form-label labling">Qualification:</label>
-          <input type="text" class="form-control" id="userqualification" >
+          <input type="text" class="form-control" id="userqualification">
         </div>
       </div>
       <!-- user designation -->
       <div class="col-md-5 boxing">
         <div class="sm">
           <label for="userdesignation" class="form-label labling">Designation:</label>
-          <input type="text" class="form-control" id="userdesignation" >
+          <input type="text" class="form-control" id="userdesignation">
         </div>
       </div>
     </div>
@@ -206,7 +224,7 @@
       <div class="col-md-5 boxing">
         <div class="sm">
           <label for="introby" class="form-label labling">Email :</label>
-          <input type="text" class="form-control" id="introby" >
+          <input type="text" class="form-control" id="introby">
         </div>
       </div>
       <!-- introducer name  -->
@@ -222,7 +240,7 @@
       <div class="col-md-5 boxing">
         <div class="sm">
           <label for="introreg" class="form-label labling">Introducer mobile number:</label>
-          <input type="number" class="form-control" id="introreg" >
+          <input type="number" class="form-control" id="introreg">
         </div>
       </div>
       <div class=" col-md-5 boxing">
@@ -242,126 +260,136 @@
     </div>
     <hr>
     <!-- terms and conditions -->
-<div class="row">
-  <div class="col-md-3">
-    <div class="form-check form-check-inline">
-      <input class="form-check-input" type="checkbox" id="declaration"  value="accepted">
-      <label for="declaration" class="form-label labling">*Terms and Conditions:</label>
+    <div class="row">
+      <div class="col-md-3">
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="checkbox" id="declaration" value="accepted">
+          <label for="declaration" class="form-label labling">*Terms and Conditions:</label>
+        </div>
+      </div>
+      <div class="col-md-9 ">
+        <p>Follow the rules and regulations.please contact us <b style="color: red"> 9494320144 </b> Help in form corrections
+          <br>contact timeings Morning <b style="color: red ">(5am to 8am)</b> evening <b style=" color:red">(6 pm to 9pm ) .</b>
+        </p>
+      </div>
     </div>
-  </div>
-  <div class="col-md-9 ">
-    <p >Follow the rules and regulations.please contact us <b  style="color: red"> 9494320144 </b> Help in form corrections
-      <br>contact timeings Morning <b style="color: red ">(5am to 8am)</b> evening  <b style=" color:red">(6 pm to 9pm ) .</b> </p>
-  </div>
-</div>
-<br>
-<div class="d-grid gap-2 col-3 mx-auto">
-  <button class="btn "  style=" background-color:#f56c6d; color:#ffffff"  type="submit">Submit</button>
-</div>
+    <br>
+    <div class="d-grid gap-2 col-3 mx-auto">
+
+      <button class=" btn "    onMouseOver="this.style.color='#000000'"onMouseOut="this.style.color='#ffffff'" style="background-color:#f56c6d" type="submit" >Submit</button>
+    </div>
+
   </form>
 
+
   <script>
-      const form = document.querySelector('form')
-      const overlay = document.querySelector('.overlay')
-      const overlayError = document.querySelector('.overlay-error')
-      const okBtn = document.querySelectorAll('.popup>button')
+    const form = document.querySelector('form')
+    const overlay = document.querySelector('.overlay')
+    const overlayError = document.querySelector('.overlay-error')
+    const okBtn = document.querySelectorAll('.popup>button')
 
-      okBtn.forEach(e => {
-          e.addEventListener('click', () => {
-              overlay.style.display = 'none'
-              overlayError.style.display = 'none'
-          })
+    okBtn.forEach(e => {
+      e.addEventListener('click', () => {
+        overlay.style.display = 'none'
+        overlayError.style.display = 'none'
       })
-      overlay.addEventListener('click', e => {
-          if (e.target.className === 'overlay')
-              overlay.style.display = 'none'
-          else
-              return 0
-      })
-      overlayError.addEventListener('click', e => {
-          if (e.target.className === 'overlay-error')
-              overlay.style.display = 'none'
-          else
-              return 0
-      })
+    })
+    overlay.addEventListener('click', e => {
+      if (e.target.className === 'overlay')
+        overlay.style.display = 'none'
+      else
+        return 0
+    })
+    overlayError.addEventListener('click', e => {
+      if (e.target.className === 'overlay-error')
+        overlay.style.display = 'none'
+      else
+        return 0
+    })
 
-      window.onload = () => {
-          const radios = document.querySelectorAll('input[type="radio"]')
-          <% if (morning >= 1200) { %>
-              radios[0].disabled = true
-          <% } %>
-          <% if (evening >= 1200) { %>
-              radios[1].disabled = true
-          <% } %>
+    window.onload = () => {
+      const radios = document.querySelectorAll('input[type="radio"]') <
+        %
+        if (morning >= 1200) {
+          % >
+          radios[0].disabled = true <
+            %
+        } % >
+        <
+        %
+      if (evening >= 1200) {
+        % >
+        radios[1].disabled = true <
+          %
+      } % >
+    }
+
+    const name = document.getElementById('username')
+    const address = document.getElementById('address')
+    const city = document.getElementById('location')
+    const age = document.getElementById('age')
+    const phone = document.getElementById('mobnumber')
+    const bloodGroup = document.getElementById('bloodgroup')
+    const healthRecord = document.getElementById('health')
+    const introducedBy = document.getElementById('introby')
+    const introducerName = document.getElementById('introname')
+    const introducerRegistration = document.getElementById('introreg')
+    const designation = document.getElementById('userdesignation')
+    const qualification = document.getElementById('userqualification')
+    const session = form.session
+
+    form.addEventListener('submit', async e => {
+      e.preventDefault()
+
+      const details = {
+        name: name.value,
+        address: address.value,
+        city: city.value,
+        age: age.value,
+        phone: phone.value,
+        bloodGroup: bloodGroup.value,
+        healthRecord: healthRecord.value,
+        introducedBy: introducedBy.value,
+        introducerName: introducerName.value,
+        introducerRegistration: introducerRegistration.value,
+        designation: designation.value,
+        qualification: qualification.value,
+        session: session.value
       }
 
-      const name = document.getElementById('username')
-      const address = document.getElementById('address')
-      const city = document.getElementById('location')
-      const age = document.getElementById('age')
-      const phone = document.getElementById('mobnumber')
-      const bloodGroup = document.getElementById('bloodgroup')
-      const healthRecord = document.getElementById('health')
-      const introducedBy = document.getElementById('introby')
-      const introducerName = document.getElementById('introname')
-      const introducerRegistration = document.getElementById('introreg')
-      const designation = document.getElementById('userdesignation')
-      const qualification = document.getElementById('userqualification')
-      const session = form.session
-
-      form.addEventListener('submit', async e => {
-          e.preventDefault()
-
-          const details = {
-              name: name.value,
-              address: address.value,
-              city: city.value,
-              age: age.value,
-              phone: phone.value,
-              bloodGroup: bloodGroup.value,
-              healthRecord: healthRecord.value,
-              introducedBy: introducedBy.value,
-              introducerName: introducerName.value,
-              introducerRegistration: introducerRegistration.value,
-              designation: designation.value,
-              qualification: qualification.value,
-              session: session.value
+      try {
+        const res = await fetch('/register', {
+          method: 'POST',
+          body: JSON.stringify(details),
+          headers: {
+            'Content-Type': 'application/json'
           }
+        })
+        const data = await res.json()
+        if (data.error) {
+          window.scrollTo(0, 0)
+          overlayError.style.display = 'block'
+        } else {
+          window.scrollTo(0, 0)
+          const okName = document.querySelector('[data-field="name"]')
+          const okCode = document.querySelector('[data-field="code"]')
+          const okBatch = document.querySelector('[data-field="batch"]')
+          const okSession = document.querySelector('[data-field="session"]')
+          const okZoom = document.querySelector('[data-field="zoom"]')
 
-          try {
-              const res = await fetch('/register', {
-                  method: 'POST',
-                  body: JSON.stringify(details),
-                  headers: {
-                      'Content-Type': 'application/json'
-                  }
-              })
-              const data = await res.json()
-              if (data.error) {
-                  window.scrollTo(0, 0)
-                  overlayError.style.display = 'block'
-              } else {
-                  window.scrollTo(0, 0)
-                  const okName = document.querySelector('[data-field="name"]')
-                  const okCode = document.querySelector('[data-field="code"]')
-                  const okBatch = document.querySelector('[data-field="batch"]')
-                  const okSession = document.querySelector('[data-field="session"]')
-                  const okZoom = document.querySelector('[data-field="zoom"]')
+          overlay.style.display = 'block'
 
-                  overlay.style.display = 'block'
+          okName.textContent = data.user.name
+          okCode.textContent = data.user.code
+          okBatch.textContent = data.user.batch
+          okZoom.textContent = `${data.user.code} ${data.user.name}`
+          okSession.textContent = data.user.session === 'm' ? "Morning" : "Evening"
+        }
 
-                  okName.textContent = data.user.name
-                  okCode.textContent = data.user.code
-                  okBatch.textContent = data.user.batch
-                  okZoom.textContent = `${data.user.code} ${data.user.name}`
-                  okSession.textContent = data.user.session === 'm' ? "Morning" : "Evening"
-              }
-
-          } catch (err) {
-              console.log(err)
-          }
-      })
-
+      } catch (err) {
+        console.log(err)
+      }
+    })
   </script>
 </body>
 
