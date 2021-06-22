@@ -5,7 +5,6 @@ const strRequired = {
     required: true
 }
 
-
 const studentSchema = new mongoose.Schema({
     name: strRequired,
     address: strRequired,
@@ -21,8 +20,12 @@ const studentSchema = new mongoose.Schema({
     batch: strRequired,
     code: strRequired,
     introducerName: strRequired,
-    introducedBy: strRequired,
-    introducerRegistration: strRequired,
+    email: strRequired,
+    introducerPhone: strRequired,
+    isBlocked: {
+        type: Boolean,
+        default: false
+    },
     designation: strRequired,
     qualification: strRequired,
 });
