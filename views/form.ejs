@@ -49,6 +49,9 @@
         position: absolute;
         z-index: 99;
     }
+    .overlay-error {
+        display: block;
+    }
     .popup {
         width: 300px;
         padding: 10px 15px;
@@ -97,7 +100,9 @@
 
   <div class="overlay-error">
       <div class="popup">
-          <h5>Phone no. Already Registered</h5>
+          <!--<h5>Phone no. Already Registered</h5>-->
+          <h5>Server is under Maintenance</h5>
+          <h5>Try after some time</h5>
           <button>OK</button>
       </div>
   </div>
@@ -274,7 +279,7 @@
 </div>
 <br>
 <div class="d-grid gap-2 col-3 mx-auto">
-  <button class="btn "  style=" background-color:#f56c6d; color:#ffffff"  type="submit" >Submit</button>
+  <button class="btn "  style=" background-color:#f56c6d; color:#ffffff"  type="submit" disabled>Submit</button>
 </div>
   </form>
 
@@ -329,6 +334,7 @@
       const batch = document.getElementById('batch')
       const session = form.session
 
+      <!--
       form.addEventListener('submit', async e => {
           e.preventDefault()
 
@@ -382,6 +388,7 @@
               console.log(err)
           }
       })
+      -->
 
   </script>
 </body>
