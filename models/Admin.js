@@ -8,7 +8,9 @@ const strRequired = {
 
 const adminSchema = new mongoose.Schema({
     email: strRequired,
-    password: strRequired
+    password: strRequired,
+    closeBatch: [String],
+    batches: [String]
 });
 
 adminSchema.pre('save', async function (next) {

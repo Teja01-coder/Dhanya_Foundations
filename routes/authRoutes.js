@@ -172,6 +172,79 @@ const download_data = async (_, res) => {
     res.download('students.csv')
 }
 
+const batchDetails = async (req, res) => {
+    const { type } = req.body
+    try {
+        let admin = await Admin.find({})
+        admin = admin[0]
+        if (type === "all") {
+            res.status(200).json({ all: admin.batches })
+        } else if (type === "closed") {
+            res.status(200).json({ closed: admin.closeBatch })
+        }
+    } catch (err) {
+        res.status(400).json({ err })
+    }
+}
+
+const batchEdit = async (req, res) => {
+    const { type, batch } = req.body
+    try {
+        if (type === 'close') {
+            const admin = await Admin.findOne({ email: 'test@test.com' })
+            let closed = admin.closeBatch
+            if (closed.includes(batch)) {
+                closed = closed.filter(e => e !== batch)
+                const edit = await Admin.findOneAndUpdate({ email: 'test@test.com' }, { closeBatch: closed })
+                res.status(200).json({ edit: 'Close' })
+            } else {
+                closed.push(batch)
+                const edit = await Admin.findOneAndUpdate({ email: 'test@test.com' }, { closeBatch: closed })
+                res.status(200).json({ edit: 'Open' })
+            }
+        } else if (type === 'add') {
+            const admin = await Admin.findOne({ email: 'test@test.com' })
+            const add = admin.batches
+            const nextBatch = Math.max(...add.map(e => +e)) + 1
+            const edit = await Admin.findOneAndUpdate({ email: 'test@test.com' }, { batches: [...add, nextBatch] })
+            res.status(200).json({ nextBatch })
+        }
+    } catch (err) {
+        res.status(400).json({ err })
+    }
+}
+
+const reRegister = async (req, res) => {
+    const { type, batch, found, email, phone, session } = req.body
+    try {
+        if (type === 'detail') {
+            let stud = await Student.findOne({ email })
+            if (!stud) {
+                stud = await Student.findOne({ phone }) 
+                res.status(200).json({ stud, found: 'phone' })
+                return
+            }
+            res.status(200).json({ stud, found: 'email' })
+        } else if (type === 'update') {
+            const id = session === 'm' ? BATCHES.morning[(+batch - 34) % 5] : BATCHES.evening[(+batch - 34) % 5]
+            const allCount = session === 'm' ? await Student.find({ session, batch }) : await Student.find({ session, batch })
+            const code = id + `${allCount.length + 1}`.padStart(4, '0')
+            if (found === 'phone') {
+                let stud = await Student.findOneAndUpdate({ phone }, { batch, code })
+                stud = await Student.findOne({ phone })
+                res.status(200).json({ stud })
+            } else if (found === 'email') {
+                let stud = await Student.findOneAndUpdate({ email }, { batch, code })
+                stud = await Student.findOne({ email })
+                res.status(200).json({ stud })
+            }
+        }
+    } catch (err) {
+        console.log(err)
+        res.status(400).json({ err })
+    }
+}
+
 router.get("/register", register_get);
 router.post("/register", register_post);
 router.get("/admin", admin_get);
@@ -179,6 +252,9 @@ router.post("/admin", admin_post);
 router.post("/message", message_post);
 router.post("/studedit", checkAdmin, studedit_post);
 router.post("/all", checkAdmin, allStudents);
+router.post("/batch", checkAdmin, batchDetails);
+router.post("/closebatch", checkAdmin, batchEdit);
+router.post("/reregister", reRegister);
 router.get("/download", checkAdmin, download_data);
 
 module.exports = router;

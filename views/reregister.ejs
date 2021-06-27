@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dhyana Foundation</title>
+  <link rel="stylesheet" href="css/form.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Varela+Round&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <!-- nav starts here -->
+  <nav class="navbar navbar-expand-lg" style="background-color:#f56c6d">
+    <a class=" navbar-brand navbar-logo scroll" href="#wrapper">
+      <img class="mb-0 logo-light" style="height:50px; width:50px"src="assets/svg/dhyanalogo.png" alt="">
+
+    </a>
+    <a class="navbar-brand" href="/" style="color:#ffffff ; margin-left: auto; margin-right:auto">
+      <h1>DHYANA FOUNDATION</h1>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  </nav>
+  <!-- nav ends here -->
+  <!-- form starts here -->
+
+  <style type="text/css" media="screen">
+    body {
+        overflow-x: hidden;
+    }
+    .overlay, .overlay-error {
+        width: 100vw;
+        height: 100vh;
+        display: none;
+        overflow: hidden;
+        background-color: rgba(0, 0, 0, 0.4);
+        position: absolute;
+        z-index: 99;
+    }
+    .popup {
+        width: 300px;
+        padding: 10px 15px;
+        position: relative;
+        margin: auto;
+        top: 15%;
+        background-color: white;
+        border-radius: 10px;
+        text-align: center;
+    }
+    .popup button {
+        padding: 7px 23px;
+        border: 0;
+        border-radius: 30px;
+        background-color: lightgrey;
+    }
+    .popup h5 {
+        margin: 19px 0;
+    }
+    .popup button:active {
+        background-color: grey;
+    }
+    .popup span {
+        font-weight: bold;
+    }
+  </style>
+
+  <div class="overlay">
+      <div class="popup">
+          <h3>Registration Success</h3>
+          <h5>Name:      <span data-field="name"></span></h5>
+          <h5>Code:      <span data-field="code"></span></h5>
+          <h5>Batch:     <span data-field="batch"></span></h5>
+          <h5>Session:   <span data-field="session"></span></h5>
+          <h5>Zoom Name: <span data-field="zoom"></span></h5>
+          <h5><span style="color: red"> please save your details⚠</span></h5>
+          <button>OK</button>
+      </div>
+  </div>
+
+  <div class="overlay-error">
+      <div class="popup">
+          <h5>Batch Closed</h5>
+          <button>OK</button>
+      </div>
+  </div>
+
+  <form class="shadow rounded-3 boxing">
+    <h1><b>సంకల్ప క్రియా యోగ (SKY)</b></h1>
+    <hr>
+    <div class="row">
+      <div class="col-md-3 boxing">
+        <div class="sm">
+          <label for="username" class="form-label labling">Name:</label>
+          <input type="text" name="name" class="form-control" id="username" required>
+        </div>
+      </div>
+      <div class="col-md-3 boxing">
+        <div class="sm">
+          <label for="mobnumber" class="form-label labling">Contact/Whatsapp Number:</label>
+          <input type="number" name="phone" class="form-control" id="mobnumber" required>
+        </div>
+      </div>
+      <div class="col-md-4 boxing">
+        <div class="sm">
+          <label for="email" class="form-label labling">Email:</label>
+          <input type="text" name="email" class="form-control" id="email" >
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class=" col-md-5 boxing">
+        <label for="session" class="form-label labling">Prefered Session:</label>
+        <div id="session">
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="session" id="inlinecheckbox1" value="m">
+            <label class="form-check-label" for="inlinecheckbox1">Morning (5am to 7am)</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="session" id="inlinecheckbox2" value="e">
+            <label class="form-check-label" for="inlinecheckbox2">Evening (6pm to 8pm)</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- terms and conditions -->
+<div class="row">
+  <div class="col-md-3">
+    <div class="form-check form-check-inline">
+      <input class="form-check-input" type="checkbox" id="declaration"  value="accepted">
+      <label for="declaration" class="form-label labling">*Terms and Conditions:</label>
+    </div>
+  </div>
+  <div class="col-md-9">
+    <p >Follow the rules and regulations.please contact us <b  style="color: red"> 9494320144 </b> Help in form corrections
+      <br>contact timeings Morning <b style="color: red">(5am to 8am)</b> evening  <b style="color: red">(6 pm to 9pm ) .</b> </p>
+  </div>
+</div>
+<br>
+<div class="d-grid gap-2 col-3 mx-auto">
+  <button class="btn" style=" background-color:#f56c6d; color:#ffffff"  type="submit">Submit</button>
+</div>
+  </form>
+
+
+  <script>
+      const form = document.querySelector('form')
+      const overlay = document.querySelector('.overlay')
+      const overlayError = document.querySelector('.overlay-error')
+      const okBtn = document.querySelectorAll('.popup button')
+
+      okBtn.forEach(e => {
+          e.addEventListener('click', () => {
+              overlay.style.display = 'none'
+              overlayError.style.display = 'none'
+          })
+      })
+      overlay.addEventListener('click', e => {
+          if (e.target.className === 'overlay')
+              overlay.style.display = 'none'
+          else
+              return 0
+      })
+      overlayError.addEventListener('click', e => {
+          if (e.target.className === 'overlay-error')
+              overlayError.style.display = 'none'
+          else
+              return 0
+      })
+
+      window.onload = async () => {
+          const resClosed = await fetch('/batch', {
+              method: 'POST',
+              body: JSON.stringify({ type: 'closed' }),
+              headers: {
+                  'Content-Type': 'application/json'
+              }
+          })
+          const { closed } = await resClosed.json()
+
+          form.addEventListener('submit', async e => {
+              e.preventDefault()
+
+              const name  = form.name.value
+              const email = form.email.value
+              const phone = form.phone.value
+              const session = form.session.value
+
+              const res = await fetch('/reregister', {
+                  method: 'POST',
+                  body: JSON.stringify({ type: 'detail', email, phone }),
+                  headers: {
+                      'Content-Type': 'application/json'
+                  }
+              })
+              const { stud, found } = await res.json()
+              if (closed.includes(`${+stud.batch + 1}`)) {
+                  window.scrollTo(0, 0)
+                  overlayError.style.display = 'block'
+              } else {
+                  const body = {
+                      type: 'update',
+                      batch: `${+stud.batch + 1}`,
+                      session,
+                      phone,
+                      email,
+                      found
+                  }
+                  const resUpdate = await fetch('/reregister', {
+                      method: 'POST',
+                      body: JSON.stringify(body),
+                      headers: {
+                          'Content-Type': 'application/json'
+                      }
+                  })
+                  const data = await resUpdate.json()
+                  window.scrollTo(0, 0)
+                  const okName = document.querySelector('[data-field="name"]')
+                  const okCode = document.querySelector('[data-field="code"]')
+                  const okBatch = document.querySelector('[data-field="batch"]')
+                  const okSession = document.querySelector('[data-field="session"]')
+                  const okZoom = document.querySelector('[data-field="zoom"]')
+
+                  overlay.style.display = 'block'
+
+                  okName.textContent = data.stud.name
+                  okCode.textContent = data.stud.code
+                  okBatch.textContent = data.stud.batch
+                  okZoom.textContent = `${data.stud.code} ${data.stud.name}`
+                  okSession.textContent = data.stud.session === 'm' ? "Morning" : "Evening"
+              }
+          })
+      }
+  </script>
+</body>
+
+</html>

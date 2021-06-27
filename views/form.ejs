@@ -20,7 +20,6 @@
 
 <body>
   <!-- nav starts here -->
-<!-- dhgbsalinhvlasjdlajlvasdlvn -->
   <nav class="navbar navbar-expand-lg" style="background-color:#f56c6d">
     <a class=" navbar-brand navbar-logo scroll" href="#wrapper">
       <img class="mb-0 logo-light" style="height:50px; width:50px"src="assets/svg/dhyanalogo.png" alt="">
@@ -40,7 +39,7 @@
     body {
         overflow-x: hidden;
     }
-    .overlay, .overlay-error {
+    .overlay, .overlay-error, .overlay-dialogue {
         width: 100vw;
         height: 100vh;
         display: none;
@@ -49,7 +48,7 @@
         position: absolute;
         z-index: 99;
     }
-    .overlay-error {
+    .overlay-dialogue {
         display: block;
     }
     .popup {
@@ -62,7 +61,7 @@
         border-radius: 10px;
         text-align: center;
     }
-    .popup>button {
+    .popup button {
         padding: 7px 23px;
         border: 0;
         border-radius: 30px;
@@ -71,7 +70,7 @@
     .popup h5 {
         margin: 19px 0;
     }
-    .popup>button:active {
+    .popup button:active {
         background-color: grey;
     }
     .popup span {
@@ -88,10 +87,10 @@
   <div class="overlay">
       <div class="popup">
           <h3>Registration Success</h3>
-          <h5>Name:    <span data-field="name"></span></h5>
-          <h5>Code:    <span data-field="code"></span></h5>
-          <h5>Batch:   <span data-field="batch"></span></h5>
-          <h5>Session: <span data-field="session"></span></h5>
+          <h5>Name:      <span data-field="name"></span></h5>
+          <h5>Code:      <span data-field="code"></span></h5>
+          <h5>Batch:     <span data-field="batch"></span></h5>
+          <h5>Session:   <span data-field="session"></span></h5>
           <h5>Zoom Name: <span data-field="zoom"></span></h5>
           <h5> <span style="color: red"> please save your details⚠</span> </h5>
           <button>OK</button>
@@ -105,6 +104,18 @@
           <h5>DT:13-06-2021 to 20-06-2021</h5>
           <h5>Help line contact: <b style="color:red"> 9494320144</b> </h5>
           <button>OK</button>
+      </div>
+  </div>
+
+  <div class="overlay-dialogue">
+      <div class="popup">
+          <h5>Already Registered?</h5>
+          <div class="yesno">
+              <a href="/reregister">
+                  <button class="prompt" id="prompt-yes">Yes</button>
+              </a>
+              <button class="prompt" id="prompt-no">No</button>
+          </div>
       </div>
   </div>
 
@@ -127,14 +138,6 @@
             <label for="batch" class="form-label labling">Batch:</label>
             <select class="form-select form-control" id="batch">
                 <option selected disabled></option>
-                <option value="35">35 batch (27-06-2021 to 04-07-2021)</option>
-                <!-- <option value="36">36</option>
-                <option value="37">37</option>
-                <option value="38">38</option>
-                <option value="39">39</option>
-                <option value="40">40</option>
-                <option value="41">41</option>
-                <option value="42">42</option> -->
             </select>
         </div>
       </div>
@@ -254,11 +257,11 @@
         <!-- session preference -->
         <div id="session">
           <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="session" id="inlinecheckbox1" value="m" data-count="<%= morning %>">
+            <input class="form-check-input" type="radio" name="session" id="inlinecheckbox1" value="m">
             <label class="form-check-label" for="inlinecheckbox1">Morning (5am to 7am)</label>
           </div>
           <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="session" id="inlinecheckbox2" value="e" data-count="<%= evening %>">
+            <input class="form-check-input" type="radio" name="session" id="inlinecheckbox2" value="e">
             <label class="form-check-label" for="inlinecheckbox2">Evening (6pm to 8pm)</label>
           </div>
         </div>
@@ -280,7 +283,7 @@
 </div>
 <br>
 <div class="d-grid gap-2 col-3 mx-auto">
-  <button class="btn "  style=" background-color:#f56c6d; color:#ffffff"  type="submit" disabled>Submit</button>
+  <button class="btn "  style=" background-color:#f56c6d; color:#ffffff"  type="submit">Submit</button>
 </div>
   </form>
 
@@ -289,12 +292,17 @@
       const form = document.querySelector('form')
       const overlay = document.querySelector('.overlay')
       const overlayError = document.querySelector('.overlay-error')
-      const okBtn = document.querySelectorAll('.popup>button')
+      const overlayDialogue = document.querySelector('.overlay-dialogue')
+      const okBtn = document.querySelectorAll('.popup button')
+      const batchDropdown = document.querySelector('#batch')
+      const promptYes = document.querySelector('#prompt-yes')
+      const promptNo = document.querySelector('#prompt-no')
 
       okBtn.forEach(e => {
           e.addEventListener('click', () => {
               overlay.style.display = 'none'
               overlayError.style.display = 'none'
+              overlayDialogue.style.display = 'none'
           })
       })
       overlay.addEventListener('click', e => {
@@ -303,21 +311,42 @@
           else
               return 0
       })
+      promptYes.addEventListener('click', e => {
+          overlayDialogue.style.display = 'none'
+      })
       overlayError.addEventListener('click', e => {
           if (e.target.className === 'overlay-error')
-              overlay.style.display = 'none'
+              overlayError.style.display = 'none'
           else
               return 0
       })
 
-      window.onload = () => {
-          const radios = document.querySelectorAll('input[type="radio"]')
-          <% if (morning >= 1200) { %>
-              radios[0].disabled = true
-          <% } %>
-          <% if (evening >= 1200) { %>
-              radios[1].disabled = true
-          <% } %>
+      window.onload = async () => {
+          const resAll = await fetch('/batch', {
+              method: 'POST',
+              body: JSON.stringify({ type: 'all' }),
+              headers: {
+                  'Content-Type': 'application/json'
+              }
+          })
+          const { all } = await resAll.json()
+
+          const resClosed = await fetch('/batch', {
+              method: 'POST',
+              body: JSON.stringify({ type: 'closed' }),
+              headers: {
+                  'Content-Type': 'application/json'
+              }
+          })
+          const { closed } = await resClosed.json()
+
+          for (let batch of all) {
+              const option = document.createElement('option')
+              option.value = batch
+              option.textContent = batch
+              closed.includes(batch) ? (option.disabled = true) : (option.disabled = false)
+              batchDropdown.appendChild(option)
+          }
       }
 
       const name = document.getElementById('username')
@@ -335,7 +364,6 @@
       const batch = document.getElementById('batch')
       const session = form.session
 
-      <!--
       form.addEventListener('submit', async e => {
           e.preventDefault()
 
@@ -389,7 +417,6 @@
               console.log(err)
           }
       })
-      -->
 
   </script>
 </body>

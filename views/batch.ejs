@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width">
+        <title>Dhyana Foundation</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <style type="text/css" media="all">
+            *,
+            html,
+            body {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+            body {
+                overflow-x: hidden;
+            }
+            .container {
+                width: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+            }
+            button {
+                padding: 2px 12px;
+                border: 1px solid grey;
+            }
+        </style>
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg" style="background-color:#f56c6d">
+            <a class=" navbar-brand navbar-logo scroll" href="/">
+                <img class="mb-0 logo-light" style="height:50px; width:50px"src="assets/svg/dhyanalogo.png" alt="">
+            </a>
+            <a class="navbar-brand" href="/" style="color:#ffffff ; margin-left: auto; margin-right:auto">
+                <h1>Dhyana Foundation</h1>
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </nav>
+        <div class="container">
+            <table class="table">
+                <tr>
+                    <th>Batch No.</th>
+                    <th>Close/Open</th>
+                </tr>
+            </table>
+            <button class="addBatch">+</button>
+        </div>
+        <script>
+            const createRows = (batches, closed) => {
+                for (let batch of batches) {
+                    const tr = document.createElement('tr')
+                    const batchNo = document.createElement('td')
+                    batchNo.textContent = batch
+                    const closeOpen = document.createElement('td')
+                    const toggleBtn = document.createElement('button')
+                    toggleBtn.classList.add('toggle')
+                    toggleBtn.setAttribute('data-batch', batch)
+                    toggleBtn.textContent = closed.includes(batch) ? "Open" : "Close"
+                    closeOpen.appendChild(toggleBtn)
+                    tr.appendChild(batchNo)
+                    tr.appendChild(closeOpen)
+                    document.querySelector('.table').appendChild(tr)
+                }
+            }
+
+            window.onload = async () => {
+                const allRes = await fetch('/batch', {
+                    method: 'POST',
+                    body: JSON.stringify({ type: 'all' }),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                const { all } = await allRes.json()
+
+                const closeRes = await fetch('/batch', {
+                    method: 'POST',
+                    body: JSON.stringify({ type: 'closed' }),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                const { closed } = await closeRes.json()
+
+                createRows(all, closed)
+
+                const toggles = document.querySelectorAll('.toggle')
+                toggles.forEach(elmt => {
+                    elmt.addEventListener('click', async e => {
+                        const batch = e.target.getAttribute('data-batch')
+                        const res = await fetch('/closebatch', {
+                            method: 'POST',
+                            body: JSON.stringify({ type: 'close', batch }),
+                            headers: {
+                                'Content-Type': 'application/json'
+                            }
+                        })
+                        const data = await res.json()
+                        if (data.edit) {
+                            elmt.textContent = data.edit
+                        }
+                    })
+                })
+
+               const addBatch = document.querySelector('.addBatch')
+               addBatch.addEventListener('click', async () => {
+                   const res = await fetch('/closebatch', {
+                       method: 'POST',
+                       body: JSON.stringify({ type: 'add' }),
+                       headers: {
+                           'Content-Type': 'application/json'
+                       }
+                   })
+                   const { nextBatch } = await res.json()
+                   if (nextBatch) {
+                        const table = document.querySelector('.table')
+                        const tr = document.createElement('tr')
+                        const batchNo = document.createElement('td')
+                        batchNo.textContent = nextBatch
+                        const closeOpen = document.createElement('td')
+                        const toggleBtn = document.createElement('button')
+                        toggleBtn.classList.add('toggle')
+                        toggleBtn.setAttribute('data-batch', nextBatch)
+                        toggleBtn.textContent = closed.includes(nextBatch) ? "Open" : "Close"
+                        closeOpen.appendChild(toggleBtn)
+                        tr.appendChild(batchNo)
+                        tr.appendChild(closeOpen)
+                        table.appendChild(tr)
+                   }
+               })
+            }
+
+        </script>
+    </body>
+</html>

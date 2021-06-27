@@ -29,5 +29,7 @@ app.get("/adminpage", approvals, checkAdmin, (_, res) => res.render("adminpage")
 app.get("/admin", (_, res) => res.render("adminlogin"));
 app.get("/register", availability, (_, res) => res.render("form"));
 app.get("/message", checkAdmin, (_, res) => res.render("message"));
+app.get("/reregister", availability, (_, res) => res.render("reregister"));
+app.get("/batch", checkAdmin, (_, res) => res.render("batch"));
 
 app.use(authRoutes)

@@ -16,7 +16,7 @@
 
 <body>
   <nav class="navbar navbar-expand-lg" style="background-color:#f56c6d">
-    <a class="navbar-brand" style="color:#ffffff">Dhyana Foundation</a>
+    <a class="navbar-brand" href="/" style="color:#ffffff">Dhyana Foundation</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <i style="font-size: 30px; color: white;" class="fas fa-bars"></i>
     </button>
@@ -24,14 +24,14 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item active">
-          <a class="nav-link" href="/" style="color:#ffffff">Database <span class="sr-only">(current)</span></a>
+          <a class="nav-link" href="/batch" style="color:#ffffff">Batch</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="/message" style="color:#ffffff">Message</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#" style="color:#ffffff">Form Corrections</a>
-        </li>
+        <!--<li class="nav-item">-->
+          <!--<a class="nav-link" href="#" style="color:#ffffff">Form Corrections</a>-->
+        <!--</li>-->
         <li class="nav-item">
           <a href="/download" style="display: inline-block; border-radius: 5px; text-decoration: none;" class="bg-white my-2 p-2 my-sm-0" id="download">Download Data</a>
         </li>
@@ -151,6 +151,18 @@
 
             const disableStud = document.querySelectorAll('.disableStud')
             const deleteStud = document.querySelectorAll('.deleteStud')
+
+            close.addEventListener('click', async e => {
+                const res = await fetch('/closebatch', {
+                    method: 'POST',
+                    body: JSON.stringify({ batch: e.target.getAttribute('data-batch') }),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                const data = await res.json()
+                console.log(data)
+            })
 
             disableStud.forEach(elmt => {
                 if (elmt.getAttribute('data-blocked') === "true") {
