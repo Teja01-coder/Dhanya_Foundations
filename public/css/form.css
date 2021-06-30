@@ -14,8 +14,17 @@ form h5{
   text-align: center;
 }
 
+form h3{
+
+    color: #f56c6d ;
+    font-weight:bolder;
+    padding: 2%;
+    text-align: center;
+
+}
+
 form h1{
-  color: #f56c6d;
+  color: red;
   font-weight:bolder;
   padding: 2%;
   text-align: center;
