@@ -252,7 +252,7 @@ router.post("/admin", admin_post);
 router.post("/message", message_post);
 router.post("/studedit", checkAdmin, studedit_post);
 router.post("/all", checkAdmin, allStudents);
-router.post("/batch", checkAdmin, batchDetails);
+router.post("/batch", batchDetails);
 router.post("/closebatch", checkAdmin, batchEdit);
 router.post("/reregister", reRegister);
 router.get("/download", checkAdmin, download_data);
