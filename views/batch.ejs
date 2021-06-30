@@ -63,7 +63,7 @@
                     const toggleBtn = document.createElement('button')
                     toggleBtn.classList.add('toggle')
                     toggleBtn.setAttribute('data-batch', batch)
-                    toggleBtn.textContent = closed.includes(batch) ? "Open" : "Close"
+                    toggleBtn.textContent = closed.includes(batch) ? "Open this batch" : "Close this batch"
                     closeOpen.appendChild(toggleBtn)
                     tr.appendChild(batchNo)
                     tr.appendChild(closeOpen)
@@ -105,7 +105,10 @@
                         })
                         const data = await res.json()
                         if (data.edit) {
-                            elmt.textContent = data.edit
+                            if (data.edit === "Open")
+                                elmt.textContent = "Open this batch"
+                            else
+                                elmt.textContent = "Close this batch"
                         }
                     })
                 })
@@ -129,7 +132,7 @@
                         const toggleBtn = document.createElement('button')
                         toggleBtn.classList.add('toggle')
                         toggleBtn.setAttribute('data-batch', nextBatch)
-                        toggleBtn.textContent = closed.includes(nextBatch) ? "Open" : "Close"
+                        toggleBtn.textContent = closed.includes(nextBatch) ? "Open this batch" : "Close this batch"
                         closeOpen.appendChild(toggleBtn)
                         tr.appendChild(batchNo)
                         tr.appendChild(closeOpen)

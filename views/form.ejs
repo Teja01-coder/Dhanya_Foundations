@@ -134,14 +134,14 @@
           <input type="text" class="form-control" id="username" required>
         </div>
       </div>
-      <!-- <div class="col-md-4 boxing">
+       <div class="col-md-4 boxing">
         <div class="sm">
             <label for="batch" class="form-label labling">Batch:</label>
             <select class="form-select form-control" id="batch" >
                 <option selected disabled></option>
             </select>
         </div>
-      </div> -->
+      </div>
     </div>
     <!-- second row of form -->
     <hr>
@@ -343,10 +343,11 @@
 
           for (let batch of all) {
               const option = document.createElement('option')
-              option.value = batch
-              option.textContent = batch
-              closed.includes(batch) ? (option.disabled = true) : (option.disabled = false)
-              batchDropdown.appendChild(option)
+              if (!closed.includes(batch)) {
+                  option.value = batch
+                  option.textContent = batch
+                  batchDropdown.appendChild(option)
+              }
           }
       }
 
