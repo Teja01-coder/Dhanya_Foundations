@@ -83,14 +83,14 @@
           <h5>Batch:     <span data-field="batch"></span></h5>
           <h5>Session:   <span data-field="session"></span></h5>
           <h5>Zoom Name: <span data-field="zoom"></span></h5>
-          <h5><span style="color: red"> please save your details⚠</span></h5>
           <button>OK</button>
       </div>
   </div>
 
   <div class="overlay-error">
       <div class="popup">
-          <h5>Batch Closed</h5>
+          <h5>Details not found</h5>
+          <h6>Recheck your mobile number and try again</h6>
           <button>OK</button>
       </div>
   </div>
@@ -99,52 +99,52 @@
     <h1><b>సంకల్ప క్రియా యోగ (SKY)</b></h1>
     <hr>
     <div class="row">
-      <div class="col-md-3 boxing">
-        <div class="sm">
-          <label for="username" class="form-label labling">Name:</label>
-          <input type="text" name="name" class="form-control" id="username" required>
-        </div>
-      </div>
+      <!--<div class="col-md-3 boxing">-->
+        <!--<div class="sm">-->
+          <!--<label for="username" class="form-label labling">Name:</label>-->
+          <!--<input type="text" name="name" class="form-control" id="username" required>-->
+        <!--</div>-->
+      <!--</div>-->
       <div class="col-md-3 boxing">
         <div class="sm">
           <label for="mobnumber" class="form-label labling">Contact/Whatsapp Number:</label>
           <input type="number" name="phone" class="form-control" id="mobnumber" required>
         </div>
       </div>
-      <div class="col-md-4 boxing">
-        <div class="sm">
-          <label for="email" class="form-label labling">Email:</label>
-          <input type="text" name="email" class="form-control" id="email" >
-        </div>
-      </div>
+      <!--<div class="col-md-4 boxing">-->
+        <!--<div class="sm">-->
+          <!--<label for="email" class="form-label labling">Email:</label>-->
+          <!--<input type="text" name="email" class="form-control" id="email" >-->
+        <!--</div>-->
+      <!--</div>-->
     </div>
-    <div class="row">
-      <div class=" col-md-5 boxing">
-        <label for="session" class="form-label labling">Prefered Session:</label>
-        <div id="session">
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="session" id="inlinecheckbox1" value="m">
-            <label class="form-check-label" for="inlinecheckbox1">Morning (5am to 7am)</label>
-          </div>
-          <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="session" id="inlinecheckbox2" value="e">
-            <label class="form-check-label" for="inlinecheckbox2">Evening (6pm to 8pm)</label>
-          </div>
-        </div>
-      </div>
-    </div>
+    <!--<div class="row">-->
+      <!--<div class=" col-md-5 boxing">-->
+        <!--<label for="session" class="form-label labling">Prefered Session:</label>-->
+        <!--<div id="session">-->
+          <!--<div class="form-check form-check-inline">-->
+            <!--<input class="form-check-input" type="radio" name="session" id="inlinecheckbox1" value="m">-->
+            <!--<label class="form-check-label" for="inlinecheckbox1">Morning (5am to 7am)</label>-->
+          <!--</div>-->
+          <!--<div class="form-check form-check-inline">-->
+            <!--<input class="form-check-input" type="radio" name="session" id="inlinecheckbox2" value="e">-->
+            <!--<label class="form-check-label" for="inlinecheckbox2">Evening (6pm to 8pm)</label>-->
+          <!--</div>-->
+        <!--</div>-->
+      <!--</div>-->
+    <!--</div>-->
     <!-- terms and conditions -->
-<div class="row">
-  <div class="col-md-3">
-    <div class="form-check form-check-inline">
-      <input class="form-check-input" type="checkbox" id="declaration"  value="accepted">
-      <label for="declaration" class="form-label labling">*Terms and Conditions:</label>
-    </div>
-  </div>
-  <div class="col-md-9">
-    <p >Follow the rules and regulations.please contact us <b  style="color: red"> 9494320144 </b> Help in form corrections
-      <br>contact timeings Morning <b style="color: red">(5am to 8am)</b> evening  <b style="color: red">(6 pm to 9pm ) .</b> </p>
-  </div>
+<!--<div class="row">-->
+  <!--<div class="col-md-3">-->
+    <!--<div class="form-check form-check-inline">-->
+      <!--<input class="form-check-input" type="checkbox" id="declaration"  value="accepted">-->
+      <!--<label for="declaration" class="form-label labling">*Terms and Conditions:</label>-->
+    <!--</div>-->
+  <!--</div>-->
+  <!--<div class="col-md-9">-->
+    <!--<p >Follow the rules and regulations.please contact us <b  style="color: red"> 9494320144 </b> Help in form corrections-->
+      <!--<br>contact timeings Morning <b style="color: red">(5am to 8am)</b> evening  <b style="color: red">(6 pm to 9pm ) .</b> </p>-->
+  <!--</div>-->
 </div>
 <br>
 <div class="d-grid gap-2 col-3 mx-auto">
@@ -179,51 +179,33 @@
       })
 
       window.onload = async () => {
-          const resClosed = await fetch('/batch', {
-              method: 'POST',
-              body: JSON.stringify({ type: 'closed' }),
-              headers: {
-                  'Content-Type': 'application/json'
-              }
-          })
-          const { closed } = await resClosed.json()
+//         const resClosed = await fetch('/batch', {
+//             method: 'POST',
+//             body: JSON.stringify({ type: 'closed' }),
+//             headers: {
+//                 'Content-Type': 'application/json'
+//             }
+//         })
+//         const { closed } = await resClosed.json()
 
           form.addEventListener('submit', async e => {
               e.preventDefault()
 
-              const name  = form.name.value
-              const email = form.email.value
+//             const name  = form.name.value
+//             const email = form.email.value
+//             const session = form.session.value
               const phone = form.phone.value
-              const session = form.session.value
 
-              const res = await fetch('/reregister', {
+              const res = await fetch('/getinfo', {
                   method: 'POST',
-                  body: JSON.stringify({ type: 'detail', email, phone }),
+                  body: JSON.stringify({ phone }),
                   headers: {
                       'Content-Type': 'application/json'
                   }
               })
-              const { stud, found } = await res.json()
-              if (closed.includes(`${+stud.batch + 1}`)) {
-                  window.scrollTo(0, 0)
-                  overlayError.style.display = 'block'
-              } else {
-                  const body = {
-                      type: 'update',
-                      batch: `${+stud.batch + 1}`,
-                      session,
-                      phone,
-                      email,
-                      found
-                  }
-                  const resUpdate = await fetch('/reregister', {
-                      method: 'POST',
-                      body: JSON.stringify(body),
-                      headers: {
-                          'Content-Type': 'application/json'
-                      }
-                  })
-                  const data = await resUpdate.json()
+
+              const data = await res.json()
+              if (data.student) {
                   window.scrollTo(0, 0)
                   const okName = document.querySelector('[data-field="name"]')
                   const okCode = document.querySelector('[data-field="code"]')
@@ -233,12 +215,59 @@
 
                   overlay.style.display = 'block'
 
-                  okName.textContent = data.stud.name
-                  okCode.textContent = data.stud.code
-                  okBatch.textContent = data.stud.batch
-                  okZoom.textContent = `${data.stud.code} ${data.stud.name}`
-                  okSession.textContent = data.stud.session === 'm' ? "Morning" : "Evening"
+                  okName.textContent = data.student.name
+                  okCode.textContent = data.student.code
+                  okBatch.textContent = data.student.batch
+                  okZoom.textContent = `${data.student.code} ${data.student.name}`
+                  okSession.textContent = data.student.session === 'm' ? "Morning" : "Evening"
+              } else {
+                  overlayError.style.display = 'block'
               }
+//         }
+
+//             const res = await fetch('/reregister', {
+//                 method: 'POST',
+//                 body: JSON.stringify({ type: 'detail', email, phone }),
+//                 headers: {
+//                     'Content-Type': 'application/json'
+//                 }
+//             })
+//             const { stud, found } = await res.json()
+//             if (closed.includes(`${+stud.batch + 1}`)) {
+//                 window.scrollTo(0, 0)
+//                 overlayError.style.display = 'block'
+//             } else {
+//                 const body = {
+//                     type: 'update',
+//                     batch: `${+stud.batch + 1}`,
+//                     session,
+//                     phone,
+//                     email,
+//                     found
+//                 }
+//                 const resUpdate = await fetch('/reregister', {
+//                     method: 'POST',
+//                     body: JSON.stringify(body),
+//                     headers: {
+//                         'Content-Type': 'application/json'
+//                     }
+//                 })
+//                 const data = await resUpdate.json()
+//                 window.scrollTo(0, 0)
+//                 const okName = document.querySelector('[data-field="name"]')
+//                 const okCode = document.querySelector('[data-field="code"]')
+//                 const okBatch = document.querySelector('[data-field="batch"]')
+//                 const okSession = document.querySelector('[data-field="session"]')
+//                 const okZoom = document.querySelector('[data-field="zoom"]')
+//
+//                 overlay.style.display = 'block'
+//
+//                 okName.textContent = data.stud.name
+//                 okCode.textContent = data.stud.code
+//                 okBatch.textContent = data.stud.batch
+//                 okZoom.textContent = `${data.stud.code} ${data.stud.name}`
+//                 okSession.textContent = data.stud.session === 'm' ? "Morning" : "Evening"
+//             }
           })
       }
   </script>
