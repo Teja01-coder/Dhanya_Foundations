@@ -245,6 +245,17 @@ const reRegister = async (req, res) => {
     }
 }
 
+const getInfo = async (req, res) => {
+    const { phone } = req.body
+
+    try {
+        const student = await Student.findOne({ phone })
+        res.status(200).json({ student })
+    } catch (err) {
+        res.status(400).json({ err })
+    }
+}
+
 router.get("/register", register_get);
 router.post("/register", register_post);
 router.get("/admin", admin_get);
@@ -255,6 +266,7 @@ router.post("/all", checkAdmin, allStudents);
 router.post("/batch", batchDetails);
 router.post("/closebatch", checkAdmin, batchEdit);
 router.post("/reregister", reRegister);
+router.post("/getinfo", getInfo);
 router.get("/download", checkAdmin, download_data);
 
 module.exports = router;

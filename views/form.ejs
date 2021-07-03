@@ -48,9 +48,9 @@
         position: absolute;
         z-index: 99;
     }
-/*    .overlay-dialogue {
+    .overlay-dialogue {
         display: block;
-    } */
+    }
     .popup {
         width: 300px;
         padding: 10px 15px;
@@ -108,17 +108,18 @@
       </div>
   </div>
 
-  <!--<div class="overlay-dialogue">-->
-      <!--<div class="popup">-->
-          <!--<h5>Already Registered?</h5>-->
-          <!--<div class="yesno">-->
-              <!--<a href="/reregister">-->
-                  <!--<button class="prompt" id="prompt-yes">Yes</button>-->
-              <!--</a>-->
-              <!--<button class="prompt" id="prompt-no">No</button>-->
-          <!--</div>-->
-      <!--</div>-->
-  <!--</div>-->
+  <div class="overlay-dialogue">
+      <div class="popup">
+          <h5>Already Registered?</h5>
+          <h6>Check your details here</h6>
+          <div class="yesno">
+              <a href="/reregister">
+                  <button class="prompt" id="prompt-yes">Check Details</button>
+              </a>
+              <button class="prompt">Close</button>
+          </div>
+      </div>
+  </div>
 
   <form class="shadow rounded-3 boxing">
     <h1><b>సంకల్ప క్రియా యోగ (SKY)</b></h1>
@@ -294,17 +295,16 @@
       const form = document.querySelector('form')
       const overlay = document.querySelector('.overlay')
       const overlayError = document.querySelector('.overlay-error')
-//     const overlayDialogue = document.querySelector('.overlay-dialogue')
+     const overlayDialogue = document.querySelector('.overlay-dialogue')
       const okBtn = document.querySelectorAll('.popup button')
       const batchDropdown = document.querySelector('#batch')
-//     const promptYes = document.querySelector('#prompt-yes')
-//     const promptNo = document.querySelector('#prompt-no')
+     const promptYes = document.querySelector('#prompt-yes')
 
       okBtn.forEach(e => {
           e.addEventListener('click', () => {
               overlay.style.display = 'none'
               overlayError.style.display = 'none'
- //            overlayDialogue.style.display = 'none'
+              overlayDialogue.style.display = 'none'
           })
       })
       overlay.addEventListener('click', e => {
@@ -313,9 +313,9 @@
           else
               return 0
       })
-//     promptYes.addEventListener('click', e => {
-//         overlayDialogue.style.display = 'none'
-//     })
+     promptYes.addEventListener('click', e => {
+         overlayDialogue.style.display = 'none'
+     })
       overlayError.addEventListener('click', e => {
           if (e.target.className === 'overlay-error')
               overlayError.style.display = 'none'
