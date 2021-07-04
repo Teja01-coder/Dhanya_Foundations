@@ -414,6 +414,7 @@
                   okBatch.textContent = data.user.batch
                   okZoom.textContent = `${data.user.code} ${data.user.name}`
                   okSession.textContent = data.user.session === 'm' ? "Morning" : "Evening"
+                  form.reset()
               }
 
           } catch (err) {
