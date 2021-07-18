@@ -61,8 +61,9 @@ const register_post = async (req, res) => {
     bloodGroup,
     healthRecord,
     email,
-    introducerName,
-    introducerPhone,
+    dob,
+    //introducerName,
+    //introducerPhone,
     designation,
     qualification,
     session
@@ -81,13 +82,14 @@ const register_post = async (req, res) => {
       bloodGroup,
       healthRecord,
       email,
-      introducerName,
-      introducerPhone,
+      dob,
+      //introducerName,
+      //introducerPhone,
       designation,
       qualification,
       session,
       batch,
-      code: id + `${allCount.length + 1}`.padStart(4, '0')
+      code: id + `${allCount.length + 1}`
     });
 
     res.status(201).json({ user });
@@ -228,7 +230,7 @@ const reRegister = async (req, res) => {
         } else if (type === 'update') {
             const id = session === 'm' ? BATCHES.morning[(+batch - 34) % 5] : BATCHES.evening[(+batch - 34) % 5]
             const allCount = session === 'm' ? await Student.find({ session, batch }) : await Student.find({ session, batch })
-            const code = id + `${allCount.length + 1}`.padStart(4, '0')
+            const code = id + `${allCount.length + 1}`
             if (found === 'phone') {
                 let stud = await Student.findOneAndUpdate({ phone }, { batch, code })
                 stud = await Student.findOne({ phone })

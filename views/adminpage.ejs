@@ -89,6 +89,7 @@
                     <td>${student.name}</td>
                     <td>${student.batch}</td>
                     <td>${student.age}</td>
+                    <td>${student.dob ?? ""}</td>
                     <td>${student.bloodGroup}</td>
                     <td>${student.city}</td>
                     <td>${student.phone}</td>
@@ -98,8 +99,8 @@
                     <td>${student.qualification}</td>
                     <td>${student.designation}</td>
                     <td>${student.email}</td>
-                    <td>${student.introducerName}</td>
-                    <td>${student.introducerPhone}</td>
+                    <!--<td>${student.introducerName}</td>-->
+                    <!--<td>${student.introducerPhone}</td>-->
                 </tr>
             `
         }
@@ -127,6 +128,7 @@
                     <th>Name</th>
                     <th>Batch</th>
                     <th>Age</th>
+                    <th>DOB</th>
                     <th>Blood Group</th>
                     <th>City/Town</th>
                     <th>Phone No</th>
@@ -136,8 +138,8 @@
                     <th>Qualification</th>
                     <th>Designation</th>
                     <th>Email</th>
-                    <th>Introducer Name</th>
-                    <th>Introducer Phone Number</th>
+                    <!--<th>Introducer Name</th>-->
+                    <!--<th>Introducer Phone Number</th>-->
                 </tr>
             `
             tr.push(header)

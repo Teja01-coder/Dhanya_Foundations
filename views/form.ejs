@@ -89,6 +89,7 @@
           <h3>Registration Success</h3>
           <h5>Name:      <span data-field="name"></span></h5>
           <h5>Code:      <span data-field="code"></span></h5>
+          <h5>Phone:     <span data-field="phone"></span></h5>
           <h5>Batch:     <span data-field="batch"></span></h5>
           <h5>Session:   <span data-field="session"></span></h5>
           <h5>Zoom Name: <span data-field="zoom"></span></h5>
@@ -235,26 +236,32 @@
       <!-- introduced by  -->
       <div class="col-md-5 boxing">
         <div class="sm">
-          <label for="email" class="form-label labling">*Email :</label>
+          <label for="email" class="form-label labling">*Email:</label>
           <input type="text" class="form-control" id="email" >
         </div>
       </div>
       <!-- introducer name  -->
+      <!--<div class="col-md-5 boxing">-->
+        <!--<div class="sm">-->
+          <!--<label for="introname" class="form-label labling">*Introducer Name:</label>-->
+          <!--<input type="text" class="form-control" id="introname">-->
+        <!--</div>-->
+      <!--</div>-->
       <div class="col-md-5 boxing">
         <div class="sm">
-          <label for="introname" class="form-label labling">*Introducer Name:</label>
-          <input type="text" class="form-control" id="introname">
+          <label for="dob" class="form-label labling">Date of Birth:</label>
+          <input type="date" class="form-control" id="dob">
         </div>
       </div>
     </div>
     <!-- seventh row of the form  -->
     <div class="row">
-      <div class="col-md-5 boxing">
-        <div class="sm">
-          <label for="introreg" class="form-label labling">*Introducer mobile number:</label>
-          <input type="number" class="form-control" id="introreg" >
-        </div>
-      </div>
+      <!--<div class="col-md-5 boxing">-->
+        <!--<div class="sm">-->
+          <!--<label for="introreg" class="form-label labling">*Introducer mobile number:</label>-->
+          <!--<input type="number" class="form-control" id="introreg" >-->
+        <!--</div>-->
+      <!--</div>-->
       <div class=" col-md-5 boxing">
         <label for="session" class="form-label labling">*Prefered Session:</label>
         <!-- session preference -->
@@ -297,10 +304,10 @@
       const form = document.querySelector('form')
       const overlay = document.querySelector('.overlay')
       const overlayError = document.querySelector('.overlay-error')
-     const overlayDialogue = document.querySelector('.overlay-dialogue')
+      const overlayDialogue = document.querySelector('.overlay-dialogue')
       const okBtn = document.querySelectorAll('.popup button')
       const batchDropdown = document.querySelector('#batch')
-     const promptYes = document.querySelector('#prompt-yes')
+      const promptYes = document.querySelector('#prompt-yes')
 
       okBtn.forEach(e => {
           e.addEventListener('click', () => {
@@ -362,8 +369,9 @@
       const bloodGroup = document.getElementById('bloodgroup')
       const healthRecord = document.getElementById('health')
       const email = document.getElementById('email')
-      const introducerName = document.getElementById('introname')
-      const introducerRegistration = document.getElementById('introreg')
+      const dob = document.getElementById('dob')
+//     const introducerName = document.getElementById('introname')
+//     const introducerRegistration = document.getElementById('introreg')
       const designation = document.getElementById('userdesignation')
       const qualification = document.getElementById('userqualification')
       const batch = document.getElementById('batch')
@@ -382,46 +390,49 @@
               bloodGroup: bloodGroup.value,
               healthRecord: healthRecord.value,
               email: email.value,
-              introducerName: introducerName.value,
-              introducerPhone: introducerRegistration.value,
+              dob: dob.value.split('-').reverse().join('-'),
+//             introducerName: introducerName.value,
+//             introducerPhone: introducerRegistration.value,
               designation: designation.value,
               qualification: qualification.value,
               session: session.value
           }
 
-          try {
-              const res = await fetch('/register', {
-                  method: 'POST',
-                  body: JSON.stringify(details),
-                  headers: {
-                      'Content-Type': 'application/json'
-                  }
-              })
-              const data = await res.json()
-              if (data.error) {
-                  window.scrollTo(0, 0)
-                  overlayError.style.display = 'block'
-              } else {
-                  window.scrollTo(0, 0)
-                  const okName = document.querySelector('[data-field="name"]')
-                  const okCode = document.querySelector('[data-field="code"]')
-                  const okBatch = document.querySelector('[data-field="batch"]')
-                  const okSession = document.querySelector('[data-field="session"]')
-                  const okZoom = document.querySelector('[data-field="zoom"]')
+         try {
+             const res = await fetch('/register', {
+                 method: 'POST',
+                 body: JSON.stringify(details),
+                 headers: {
+                     'Content-Type': 'application/json'
+                 }
+             })
+             const data = await res.json()
+             if (data.error) {
+                 window.scrollTo(0, 0)
+                 overlayError.style.display = 'block'
+             } else {
+                 window.scrollTo(0, 0)
+                 const okName = document.querySelector('[data-field="name"]')
+                 const okCode = document.querySelector('[data-field="code"]')
+                 const okBatch = document.querySelector('[data-field="batch"]')
+                 const okSession = document.querySelector('[data-field="session"]')
+                 const okZoom = document.querySelector('[data-field="zoom"]')
+                 const okPhone = document.querySelector('[data-field="phone"]')
 
-                  overlay.style.display = 'block'
+                 overlay.style.display = 'block'
 
-                  okName.textContent = data.user.name
-                  okCode.textContent = data.user.code
-                  okBatch.textContent = data.user.batch
-                  okZoom.textContent = `${data.user.code} ${data.user.name}`
-                  okSession.textContent = data.user.session === 'm' ? "Morning" : "Evening"
-                  form.reset()
-              }
+                 okName.textContent = data.user.name
+                 okCode.textContent = data.user.code
+                 okBatch.textContent = data.user.batch
+                 okPhone.textContent = data.user.phone
+                 okZoom.textContent = `${data.user.code} ${data.user.name}`
+                 okSession.textContent = data.user.session === 'm' ? "Morning" : "Evening"
+                 form.reset()
+             }
 
-          } catch (err) {
-              console.log(err)
-          }
+         } catch (err) {
+             console.log(err)
+         }
       })
 
   </script>

@@ -19,9 +19,10 @@ const studentSchema = new mongoose.Schema({
     session: strRequired,
     batch: strRequired,
     code: strRequired,
-    introducerName: strRequired,
+    dob: strRequired,
+    //introducerName: strRequired,
     email: strRequired,
-    introducerPhone: strRequired,
+    //introducerPhone: strRequired,
     isBlocked: {
         type: Boolean,
         default: false
