@@ -69,7 +69,17 @@ const register_post = async (req, res) => {
     session
   } = req.body;
 
-    const id = session === 'm' ? BATCHES.morning[(+batch - 34) % 5] : BATCHES.evening[(+batch - 34) % 5]
+    const id = 
+        (session === 'm' && batch === '36') ? "BA"
+        : (session === 'e' && batch === '36') ? "BB"
+        : (session === 'm' && batch === '37') ? "BC"
+        : (session === 'e' && batch === '37') ? "BD"
+        : (session === 'm' && batch === '38') ? "BE"
+        : (session === 'e' && batch === '38') ? "BF"
+        : (session === 'm' && batch === '39') ? "BG"
+        : (session === 'e' && batch === '39') ? "BH"
+        : "BH"
+    //const id = session === 'm' ? BATCHES.morning[(+batch - 34) % 5] : BATCHES.evening[(+batch - 34) % 5]
     const allCount = session === 'm' ? await Student.find({ session, batch }) : await Student.find({ session, batch })
 
   try {
