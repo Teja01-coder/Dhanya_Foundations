@@ -8,10 +8,10 @@ const { checkAdmin } = require("../middlewares/authMiddleware");
 
 const router = Router();
 
-const BATCHES = {
-    morning: ["AS", "AU", "AW", "BA", "BC"],
-    evening: ["AT", "AV", "AX", "BB", "BD"]
-}
+//const BATCHES = {
+    //morning: ["AS", "AU", "AW", "BA", "BC"],
+    //evening: ["AT", "AV", "AX", "BB", "BD"]
+//}
 
 const allStudents = async (req, res) => {
     const { batch } = req.body
@@ -69,17 +69,19 @@ const register_post = async (req, res) => {
     session
   } = req.body;
 
-    const id = 
-        (session === 'm' && batch === '36') ? "BA"
-        : (session === 'e' && batch === '36') ? "BB"
-        : (session === 'm' && batch === '37') ? "BC"
-        : (session === 'e' && batch === '37') ? "BD"
-        : (session === 'm' && batch === '38') ? "BE"
-        : (session === 'e' && batch === '38') ? "BF"
-        : (session === 'm' && batch === '39') ? "BG"
-        : (session === 'e' && batch === '39') ? "BH"
-        : "BH"
+    //const id = 
+        //(session === 'm' && batch === '36') ? "BA"
+        //: (session === 'e' && batch === '36') ? "BB"
+        //: (session === 'm' && batch === '37') ? "BC"
+        //: (session === 'e' && batch === '37') ? "BD"
+        //: (session === 'm' && batch === '38') ? "BE"
+        //: (session === 'e' && batch === '38') ? "BF"
+        //: (session === 'm' && batch === '39') ? "BG"
+        //: (session === 'e' && batch === '39') ? "BH"
+        //: "BH"
     //const id = session === 'm' ? BATCHES.morning[(+batch - 34) % 5] : BATCHES.evening[(+batch - 34) % 5]
+    const callingAdmin = await Admin.findOne({ email: 'test@test.com' })
+    const id = session === 'm' ? callingAdmin.codes[batch][0] : callingAdmin.codes[batch][1]
     const allCount = session === 'm' ? await Student.find({ session, batch }) : await Student.find({ session, batch })
 
   try {
@@ -193,6 +195,8 @@ const batchDetails = async (req, res) => {
             res.status(200).json({ all: admin.batches })
         } else if (type === "closed") {
             res.status(200).json({ closed: admin.closeBatch })
+        } else if (type === "codes") {
+            res.status(200).json({ codes: admin.codes })
         }
     } catch (err) {
         res.status(400).json({ err })
@@ -220,6 +224,13 @@ const batchEdit = async (req, res) => {
             const nextBatch = Math.max(...add.map(e => +e)) + 1
             const edit = await Admin.findOneAndUpdate({ email: 'test@test.com' }, { batches: [...add, nextBatch] })
             res.status(200).json({ nextBatch })
+        } else if (type === 'codes') {
+            const admin = await Admin.findOne({ email: 'test@test.com' })
+            const old = admin.codes
+            const cur = batch
+            const codes = { ...old, ...cur }
+            const edit = await Admin.findOneAndUpdate({ email: 'test@test.com' }, { codes })
+            res.status(200).json({ msg: 'done' })
         }
     } catch (err) {
         res.status(400).json({ err })

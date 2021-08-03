@@ -10,7 +10,8 @@ const adminSchema = new mongoose.Schema({
     email: strRequired,
     password: strRequired,
     closeBatch: [String],
-    batches: [String]
+    batches: [String],
+    codes: mongoose.Schema.Types.Mixed
 });
 
 adminSchema.pre('save', async function (next) {

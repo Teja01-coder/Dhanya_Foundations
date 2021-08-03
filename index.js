@@ -31,5 +31,6 @@ app.get("/register", availability, (_, res) => res.render("form"));
 app.get("/message", checkAdmin, (_, res) => res.render("message"));
 app.get("/reregister", availability, (_, res) => res.render("reregister"));
 app.get("/batch", checkAdmin, (_, res) => res.render("batch"));
+app.get("/code", checkAdmin, (_, res) => res.render("code"));
 
 app.use(authRoutes)

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width">
+        <title>Dhyana Foundation</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <style type="text/css" media="all">
+            *,
+            html,
+            body {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+            body {
+                overflow-x: hidden;
+            }
+            .container {
+                width: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+            }
+            button {
+                padding: 2px 12px;
+                border: 1px solid grey;
+            }
+
+            input {
+                width: 50px;
+            }
+        </style>
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-lg" style="background-color:#f56c6d">
+            <a class=" navbar-brand navbar-logo scroll" href="/">
+                <img class="mb-0 logo-light" style="height:50px; width:50px"src="assets/svg/dhyanalogo.png" alt="">
+            </a>
+            <a class="navbar-brand" href="/" style="color:#ffffff ; margin-left: auto; margin-right:auto">
+                <h1>Dhyana Foundation</h1>
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </nav>
+        <div class="container">
+            <table class="table">
+                <tr>
+                    <th>Batch No.</th>
+                    <th>Morning</th>
+                    <th>Evening</th>
+                    <th>Update</th>
+                </tr>
+            </table>
+        </div>
+        <script>
+            const btns = () => {
+                const buttons = document.querySelectorAll('.submit')
+                buttons.forEach(btn => {
+                    btn.addEventListener('click', async e => {
+                        const batch = e.target.getAttribute('data-batch')
+                        const morning = document.getElementById(`m${batch}`).value
+                        const evening = document.getElementById(`e${batch}`).value
+                        
+                        const ret = { [batch]: [morning, evening] }
+                        const final = {
+                            type: 'codes',
+                            batch: ret
+                        }
+
+                        const res = await fetch('/closebatch', {
+                            method: 'POST',
+                            body: JSON.stringify(final),
+                            headers: {
+                                'Content-Type': 'application/json'
+                            }
+                        })
+
+                        const data = await res.json()
+                        console.log(data)
+                    })
+                })
+            }
+
+            window.onload = async () => {
+                const table = document.querySelector('.table')
+
+                const res = await fetch('/batch', {
+                    method: 'POST',
+                    body: JSON.stringify({ type: 'all' }),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                const { all } = await res.json()
+
+                const codesRes = await fetch('/batch', {
+                    method: 'POST',
+                    body: JSON.stringify({ type: 'codes' }),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
+                const { codes } = await codesRes.json()
+
+                const createTD = batch => `
+                        <td>${batch}</td>
+                        <td>
+                            <input id="m${batch}" type="text" value="${codes[batch] ? codes[batch][0] : ""}" />
+                        </td>
+                        <td>
+                            <input id="e${batch}" type="text" value="${codes[batch] ? codes[batch][1] : ""}" />
+                        </td>
+                        <td>
+                            <button class="submit" data-batch=${batch}>Update batch ${batch}</button>
+                        </td>
+                    `
+
+                for (let batch of all) {
+                    const tr = document.createElement('tr')
+                    tr.innerHTML = createTD(batch)
+                    table.appendChild(tr)
+                }
+
+                btns()
+            }
+
+        </script>
+    </body>
+</html>
+
